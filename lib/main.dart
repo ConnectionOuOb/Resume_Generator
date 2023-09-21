@@ -32,6 +32,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: SizedBox());
+    return  Container(
+      width: 500,
+      color: Colors.amber,
+      child: const Text("TEST"),
+    );
   }
 }
