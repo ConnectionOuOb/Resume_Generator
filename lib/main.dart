@@ -1,4 +1,8 @@
+import 'text.dart';
 import 'package:flutter/material.dart';
+
+bool lang = false;
+TextTranslation tt = TextTranslation();
 
 void main() {
   runApp(const AutoResume());
@@ -10,7 +14,7 @@ class AutoResume extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Auto Resume",
+      title: lang ? tt.resumeGenerator.zh : tt.resumeGenerator.en,
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
       home: const Home(),
@@ -28,6 +32,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SizedBox());
+    return const Scaffold(body: SizedBox());
   }
 }
