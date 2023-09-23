@@ -1,4 +1,4 @@
-name: Resume
+name: resume
 description: Automatically generate resume.
 publish_to: 'none'
 
@@ -11,8 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  pdf: ^3.10.4
   http: ^1.0.0
   url_launcher: ^6.1.11
+  universal_html: ^2.2.4
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
