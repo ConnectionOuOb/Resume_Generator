@@ -7,9 +7,7 @@ import 'package:universal_html/html.dart' as html;
 bool lang = false;
 double a4Width = 794;
 TextTranslation tt = TextTranslation();
-List<PersonInfo> resumes = [
-
-];
+List<PersonInfo> resumes = [];
 
 void main() {
   runApp(const AutoResume());

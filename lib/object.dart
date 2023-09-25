@@ -14,6 +14,16 @@ class LocalText {
   });
 }
 
+class Url {
+  String alias;
+  String url;
+
+  Url({
+    required this.alias,
+    required this.url,
+  });
+}
+
 class Education {
   String timeStart;
   String timeEnd;
@@ -67,12 +77,13 @@ class CareerExperience {
 }
 
 class PersonInfo {
+  String alias;
   String name;
   String site;
   String phone;
   String email;
   String summary;
-  List<String> urls;
+  List<Url> urls;
   List<String> coreCompetencies;
   List<Education> educations;
   List<Certification> certifications;
@@ -81,6 +92,7 @@ class PersonInfo {
   List<CareerExperience> careerExperiences;
 
   PersonInfo({
+    required this.alias,
     required this.name,
     required this.site,
     required this.phone,
@@ -95,3 +107,93 @@ class PersonInfo {
     required this.careerExperiences,
   });
 }
+
+PersonInfo connectionEn = PersonInfo(
+  alias: 'English',
+  name: 'Connection Lee',
+  site: r'Hsinchu, Taiwan',
+  phone: '+886-935354154',
+  email: 'connection.bt12@nycu.edu.tw',
+  summary:
+      r'NYCU Bioinformatics and Systems Biology graduated with skills in big data analysis and modeling. Currently seeking aposition as a Data Scientist. I have gained experience of developing neural network models with Academia Sinica andworked as a Research and Development Engineer at Bovia, receiving a championship in the Chunghwa Telecom 5G Innovative Application Competition.',
+  urls: [],
+  coreCompetencies: [
+    "Machine Learning",
+    "Big Data Analysis",
+    "System Design",
+    "Full Stack Engineer",
+  ],
+  educations: [
+    Education(
+      timeStart: '2023',
+      timeEnd: 'Present',
+      school: r'National Yang Ming Chiao Tung University',
+      department: 'Institute of Bioinformatics and Systems Biology',
+    ),
+    Education(
+      timeStart: '2017',
+      timeEnd: '2023',
+      school: r'National Yang Ming Chiao Tung University',
+      department: 'Department of Biological Science and Technology',
+    ),
+  ],
+  certifications: [],
+  professionalDevelopments: [
+    CategoryDescription(
+      category: 'Marine data modeling',
+      description: 'Academia Sinica',
+    ),
+  ],
+  technicalProficiencies: [
+    CategoryDescription(
+      category: 'Data Science',
+      description: 'Python, Tensorflow, Scikit-Learn',
+    ),
+    CategoryDescription(
+      category: 'Full stack',
+      description: 'Golang, Dart/Flutter, MySQL, POSTGRESQL',
+    ),
+    CategoryDescription(
+      category: 'Algorithm',
+      description: 'Algorithm optimisation, Distributed computing',
+    ),
+    CategoryDescription(
+      category: 'DevOps',
+      description: 'Docker, Kubernetes, Proxmox VE',
+    ),
+    CategoryDescription(
+      category: 'OS',
+      description: 'Unix / Linux (Centos, Ubuntu)',
+    ),
+    CategoryDescription(
+      category: 'Others',
+      description: 'Git, MS Office Suite, Jira',
+    ),
+  ],
+  careerExperiences: [
+    CareerExperience(
+      companyName: 'Dimension Computer Technology CO., LTD.',
+      jobTitle: r'TSMC Onsite IT Assistant Engineer',
+      timeStart: 'June 2023',
+      timeEnd: 'September 2023',
+      summary: '',
+      descriptions: [],
+    ),
+    CareerExperience(
+      companyName: r'BOVIA CO., LTD.',
+      jobTitle: 'Software R&D Engineer',
+      timeStart: 'January 2022',
+      timeEnd: 'January 2024',
+      summary: '',
+      descriptions: [],
+    ),
+    CareerExperience(
+      companyName: r'Computational Biology and Bioengineering Laboratory, IBSB, NYCU',
+      jobTitle: 'MIS & IT Engineer',
+      timeStart: 'September 2018',
+      timeEnd: 'February 2023',
+      summary: '',
+      descriptions: [],
+    ),
+  ],
+);
