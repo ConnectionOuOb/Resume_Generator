@@ -36,6 +36,24 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String pdfName = lang ? tt.resumePdfName.zh : tt.resumePdfName.en;
+  TabCtl tabCtl = TabCtl(
+    isExtendSummary: true,
+    isExtendProfessionalDevelopments: true,
+    isExtendUrls: true,
+    isExtendCoreCompetencies: true,
+    isExtendEducations: true,
+    isExtendCertifications: true,
+    isExtendTechnicalProficiencies: true,
+    isExtendCareerExperiences: true,
+    isSelectSummary: true,
+    isSelectUrls: true,
+    isSelectCoreCompetencies: true,
+    isSelectCertifications: true,
+    isSelectEducations: true,
+    isSelectProfessionalDevelopments: true,
+    isSelectCareerExperiences: true,
+    isSelectTechnicalProficiencies: true,
+  );
   dynamic anchor;
   final pdf = pw.Document();
 

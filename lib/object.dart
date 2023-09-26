@@ -14,6 +14,44 @@ class LocalText {
   });
 }
 
+class TabCtl {
+  bool isExtendSummary;
+  bool isExtendUrls;
+  bool isExtendCoreCompetencies;
+  bool isExtendEducations;
+  bool isExtendCertifications;
+  bool isExtendProfessionalDevelopments;
+  bool isExtendTechnicalProficiencies;
+  bool isExtendCareerExperiences;
+  bool isSelectSummary;
+  bool isSelectUrls;
+  bool isSelectCoreCompetencies;
+  bool isSelectEducations;
+  bool isSelectCertifications;
+  bool isSelectProfessionalDevelopments;
+  bool isSelectTechnicalProficiencies;
+  bool isSelectCareerExperiences;
+
+  TabCtl({
+    required this.isExtendSummary,
+    required this.isExtendUrls,
+    required this.isExtendCoreCompetencies,
+    required this.isExtendEducations,
+    required this.isExtendCertifications,
+    required this.isExtendProfessionalDevelopments,
+    required this.isExtendTechnicalProficiencies,
+    required this.isExtendCareerExperiences,
+    required this.isSelectSummary,
+    required this.isSelectUrls,
+    required this.isSelectCoreCompetencies,
+    required this.isSelectEducations,
+    required this.isSelectCertifications,
+    required this.isSelectProfessionalDevelopments,
+    required this.isSelectTechnicalProficiencies,
+    required this.isSelectCareerExperiences,
+  });
+}
+
 class Url {
   String alias;
   String url;
