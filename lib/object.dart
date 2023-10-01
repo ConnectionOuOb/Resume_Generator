@@ -1,7 +1,68 @@
 class TextTranslation {
-  LocalText get resumePdfName => LocalText(en: "Resume.pdf", zh: "履歷.pdf");
+  // ## Language
+  LocalText get languageSetting => LocalText(
+        en: "Language Setting",
+        zh: "語言設定",
+      );
 
-  LocalText get resumeGenerator => LocalText(en: "Resume Generator", zh: "履歷產生器");
+  LocalText get languageEN => LocalText(
+        en: "English",
+        zh: "英文",
+      );
+
+  LocalText get languageZH => LocalText(
+        en: "Chinese",
+        zh: "中文",
+      );
+
+  // ## Switcher
+  LocalText get resumeSwitch => LocalText(
+        en: "Resume Switcher",
+        zh: "履歷切換",
+      );
+
+  LocalText get deleteResume => LocalText(
+        en: "Delete Resume",
+        zh: "刪除履歷",
+      );
+
+  LocalText get loadSample => LocalText(
+        en: "Load Sample",
+        zh: "載入樣本",
+      );
+
+  // ## Setting
+  LocalText get resumeSetting => LocalText(
+        en: "Resume Setting",
+        zh: "履歷設定",
+      );
+
+  LocalText get noResumeSelect => LocalText(
+        en: "No Resume Selected!",
+        zh: "尚未選取任何履歷!",
+      );
+
+  LocalText get pleaseSelect => LocalText(
+        en: "select one at resume switcher",
+        zh: "請在切換器選一個履歷",
+      );
+
+  // # Basic
+  LocalText get basicInfo => LocalText(
+        en: "Basic Information",
+        zh: "基本資訊",
+      );
+
+  LocalText get basicInfoName => LocalText(
+        en: "Name",
+        zh: "姓名",
+      );
+
+  // ## Generate
+  LocalText get generate => LocalText(
+        en: "generate resume",
+        zh: "生成履歷",
+      );
 }
 
 class LocalText {
@@ -128,6 +189,22 @@ class PersonInfo {
   List<CategoryDescription> professionalDevelopments;
   List<CategoryDescription> technicalProficiencies;
   List<CareerExperience> careerExperiences;
+
+  PersonInfo newCopy({required String newAlias}) => PersonInfo(
+        alias: newAlias,
+        name: name,
+        site: site,
+        phone: phone,
+        email: email,
+        summary: summary,
+        urls: urls,
+        coreCompetencies: coreCompetencies,
+        educations: educations,
+        certifications: certifications,
+        professionalDevelopments: professionalDevelopments,
+        technicalProficiencies: technicalProficiencies,
+        careerExperiences: careerExperiences,
+      );
 
   PersonInfo({
     required this.alias,
