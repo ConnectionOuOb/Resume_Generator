@@ -104,12 +104,6 @@
       "languageVersion": "3.0"
     },
     {
-      "name": "flutter_web_plugins",
-      "rootUri": "file:///C:/Users/Connection/Documents/Flutter/flutter/packages/flutter_web_plugins",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
       "name": "html",
       "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.4",
       "packageUri": "lib/",
@@ -188,12 +182,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "plugin_platform_interface",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "pointycastle",
       "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
       "packageUri": "lib/",
@@ -266,54 +254,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "url_launcher",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.11",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "url_launcher_android",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.0.35",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "url_launcher_ios",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_ios-6.1.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "url_launcher_linux",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_linux-3.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "url_launcher_macos",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_macos-3.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "url_launcher_platform_interface",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_platform_interface-2.1.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "url_launcher_web",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_web-2.0.17",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "url_launcher_windows",
-      "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_windows-3.0.6",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/Connection/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -338,7 +278,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-10-02T07:19:45.842780Z",
+  "generated": "2023-10-02T11:48:16.270596Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }

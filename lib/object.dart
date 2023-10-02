@@ -15,6 +15,37 @@ class TextTranslation {
         zh: "中文",
       );
 
+  // ## Universal
+  LocalText get timeStart => LocalText(
+        en: "Start",
+        zh: "開始",
+      );
+
+  LocalText get timeEnd => LocalText(
+        en: "End",
+        zh: "結束",
+      );
+
+  LocalText get itemNew => LocalText(
+        en: "Add an item",
+        zh: "新增一項",
+      );
+
+  LocalText get itemDel => LocalText(
+        en: "Delete last item",
+        zh: "刪除最後一項",
+      );
+
+  LocalText get itemSave => LocalText(
+        en: "Save this block",
+        zh: "儲存此區",
+      );
+
+  LocalText get itemSaveSuccess => LocalText(
+        en: " Successful saved !",
+        zh: " 儲存成功 !",
+      );
+
   // ## Switcher
   LocalText get resumeSwitch => LocalText(
         en: "Resume Switcher",
@@ -47,7 +78,7 @@ class TextTranslation {
         zh: "請在切換器選一個履歷",
       );
 
-  // # Basic
+  // # 1. Basic
   LocalText get basic => LocalText(
         en: "1. Basic Information",
         zh: "1. 基本資訊",
@@ -83,80 +114,145 @@ class TextTranslation {
         zh: "資格摘要",
       );
 
-  LocalText get basicSave => LocalText(
-        en: "Save Basic Information",
-        zh: "儲存基本資訊",
-      );
-
-  LocalText get basicSaveSuccess => LocalText(
-        en: "Save Basic Information successful",
-        zh: "成功儲存基本資訊",
-      );
-
-  // # Url
-  LocalText get url => LocalText(
-        en: "2. Urls",
-        zh: "2. 超連結",
-      );
-
-  LocalText get urlAlias => LocalText(
-        en: "Name",
-        zh: "名稱",
-      );
-
-  LocalText get urlPath => LocalText(
-        en: "Name",
-        zh: "超連結位址",
-      );
-
-  LocalText get urlNew => LocalText(
-        en: "Add an Url",
-        zh: "新增一筆超連結",
-      );
-
-  LocalText get urlDel => LocalText(
-        en: "Delete an Url",
-        zh: "刪除一筆超連結",
-      );
-
-  LocalText get urlSave => LocalText(
-        en: "Save Urls",
-        zh: "儲存超連結",
-      );
-
-  LocalText get urlSaveSuccess => LocalText(
-        en: "Save Urls successful",
-        zh: "成功儲存超連結",
-      );
-
-  // ## Core Competencies
+  // ## 2. Core Competencies
   LocalText get coreCompetencies => LocalText(
         en: "Core Competencies",
         zh: "核心競爭力",
       );
 
-  // ## Core Competencies
+  LocalText get coreCompetenciesSetting => LocalText(
+        en: "2. Core Competencies",
+        zh: "2. 核心競爭力",
+      );
+
+  LocalText get coreCompetency => LocalText(
+        en: "Item",
+        zh: "項目",
+      );
+
+  // ## 3. Education
   LocalText get education => LocalText(
         en: "Education",
         zh: "學歷",
       );
 
-  // ## Core Competencies
+  LocalText get educationSetting => LocalText(
+        en: "3. Education",
+        zh: "3. 學歷",
+      );
+
+  LocalText get educationSchool => LocalText(
+        en: "School",
+        zh: "學校",
+      );
+
+  LocalText get educationDepartment => LocalText(
+        en: "Department",
+        zh: "學系",
+      );
+
+  // ## 4.Certifications
+  LocalText get certifications => LocalText(
+        en: "Certifications",
+        zh: "證照",
+      );
+
+  LocalText get certificationsSetting => LocalText(
+        en: "4. Certifications",
+        zh: "4. 證照",
+      );
+
+  LocalText get certificationsDescription => LocalText(
+        en: "Certification",
+        zh: "證照",
+      );
+
+  LocalText get certificationsOrganization => LocalText(
+        en: "Organization",
+        zh: "組織",
+      );
+
+  // ## 5. Professional Development
   LocalText get professionalDevelopment => LocalText(
         en: "Professional Development",
         zh: "持續專業發展",
       );
 
-  // ## Technical Proficiencies
+  LocalText get professionalDevelopmentSetting => LocalText(
+        en: "5. Professional Development",
+        zh: "5. 持續專業發展",
+      );
+
+  LocalText get professionalDevelopmentDescription => LocalText(
+        en: "Description",
+        zh: "敘述",
+      );
+
+  LocalText get professionalDevelopmentOrganization => LocalText(
+        en: "Organization",
+        zh: "組織",
+      );
+
+  // ## 6. Technical Proficiencies
   LocalText get technicalProficiencies => LocalText(
         en: "Technical Proficiencies",
         zh: "熟練技能",
       );
 
-  // ## Career Experience
+  LocalText get technicalProficienciesSetting => LocalText(
+        en: "6. Technical Proficiencies",
+        zh: "6. 熟練技能",
+      );
+
+  LocalText get technicalProficienciesCategory => LocalText(
+        en: "Category",
+        zh: "類別",
+      );
+
+  LocalText get technicalProficienciesDescription => LocalText(
+        en: "Description",
+        zh: "敘述",
+      );
+
+  // ## 7. Career Experience
   LocalText get careerExperience => LocalText(
         en: "Career Experience",
         zh: "職涯經歷",
+      );
+
+  LocalText get careerExperienceSetting => LocalText(
+        en: "7. Career Experience",
+        zh: "7. 職涯經歷",
+      );
+
+  LocalText get careerExperienceCompany => LocalText(
+        en: "Company",
+        zh: "公司",
+      );
+
+  LocalText get careerExperienceJob => LocalText(
+        en: "Job title",
+        zh: "職稱",
+      );
+
+  LocalText get careerExperienceSummary => LocalText(
+        en: "Overview",
+        zh: "概述",
+      );
+
+  LocalText get careerFocus => LocalText(
+        en: "Focus",
+        zh: "重點",
+      );
+
+  LocalText get careerFocusAdd => LocalText(
+        en: "Add a Focus",
+        zh: "新增一筆重點",
+      );
+
+  LocalText get careerFocusDel => LocalText(
+        en: "Remove last Focus",
+        zh: "刪除最後一筆重點",
       );
 
   // ## Generate
@@ -173,16 +269,6 @@ class LocalText {
   LocalText({
     required this.en,
     required this.zh,
-  });
-}
-
-class Url {
-  String alias;
-  String url;
-
-  Url({
-    required this.alias,
-    required this.url,
   });
 }
 
@@ -245,7 +331,6 @@ class PersonInfo {
   String phone;
   String email;
   String summary;
-  List<Url> urls;
   List<String> coreCompetencies;
   List<Education> educations;
   List<Certification> certifications;
@@ -260,7 +345,6 @@ class PersonInfo {
         phone: phone,
         email: email,
         summary: summary,
-        urls: urls,
         coreCompetencies: coreCompetencies,
         educations: educations,
         certifications: certifications,
@@ -276,7 +360,6 @@ class PersonInfo {
     required this.phone,
     required this.email,
     required this.summary,
-    required this.urls,
     required this.coreCompetencies,
     required this.educations,
     required this.certifications,
@@ -292,9 +375,12 @@ PersonInfo connectionEn = PersonInfo(
   site: r'Hsinchu, Taiwan',
   phone: '+886-935354154',
   email: 'connection.bt12@nycu.edu.tw',
-  summary:
-      r'NYCU Bioinformatics and Systems Biology graduated with skills in big data analysis and modeling. Currently seeking aposition as a Data Scientist. I have gained experience of developing neural network models with Academia Sinica andworked as a Research and Development Engineer at Bovia, receiving a championship in the Chunghwa Telecom 5G Innovative Application Competition.',
-  urls: [],
+  summary: r'NYCU Bioinformatics and Systems Biology graduated with skills in'
+      r' big data analysis and modeling. Currently seeking aposition as a'
+      r' Data Scientist. I have gained experience of developing neural ne'
+      r'twork models with Academia Sinica andworked as a Research and Deve'
+      r'lopment Engineer at Bovia, receiving a championship in the Chunghwa'
+      r' Telecom 5G Innovative Application Competition.',
   coreCompetencies: [
     "Machine Learning",
     "Big Data Analysis",
@@ -315,7 +401,10 @@ PersonInfo connectionEn = PersonInfo(
       department: 'Department of Biological Science and Technology',
     ),
   ],
-  certifications: [],
+  certifications: [
+    Certification(description: "description1", organization: "organization1"),
+    Certification(description: "description2", organization: "organization2"),
+  ],
   professionalDevelopments: [
     CategoryDescription(
       category: 'Marine data modeling',

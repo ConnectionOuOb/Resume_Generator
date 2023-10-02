@@ -198,7 +198,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           shrinkWrap: true,
                           itemCount: resumes.length,
                           separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(height: 5);
+                            return const SizedBox(height: 7);
                           },
                           itemBuilder: (context, index) {
                             return TextButton(
@@ -292,104 +292,127 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Stack(
       children: [
         // # Name
-        resumeAnchor(30, 30, 35, resumes[mainResume].name, true, false, Colors.black),
+        resumeAnchor(30, 30, 30, resumes[mainResume].name, true, false, Colors.black),
 
         // # Info
-        resumeAnchor(520, 30, 15, '${resumes[mainResume].site}  ||  ${resumes[mainResume].phone}', false, false, Colors.black),
-        resumeAnchor(520, 50, 15, resumes[mainResume].email, false, false, Colors.black),
+        resumeAnchor(520, 30, 12, '${resumes[mainResume].site}  •  ${resumes[mainResume].phone}', false, false, Colors.black),
+        resumeAnchor(520, 50, 12, resumes[mainResume].email, false, false, Colors.black),
 
         // # Qualifications Summary
-        resumeAnchor(30, 90, 25, tt.basicSummary.en, false, true, Colors.black),
-        resumeAnchor(30, 120, 18, resumes[mainResume].summary, false, false, Colors.black),
+        resumeAnchor(30, 90, 22, tt.basicSummary.en, false, true, Colors.black),
+        resumeAnchor(30, 120, 15, resumes[mainResume].summary, false, false, Colors.black),
 
         // # Core Competencies
-        resumeAnchor(30, 250, 25, tt.coreCompetencies.en, true, false, Colors.blue),
-        resumeList(
-          30,
-          285,
-          resumes[mainResume].coreCompetencies.map((entry) {
-            return resumeText(18, "• $entry", false, false, Colors.black);
-          }).toList(),
-        ),
+        if (resumes[mainResume].coreCompetencies.isNotEmpty) resumeAnchor(30, 250, 22, tt.coreCompetencies.en, true, false, Colors.blue),
+        if (resumes[mainResume].coreCompetencies.isNotEmpty)
+          resumeList(
+            30,
+            285,
+            resumes[mainResume].coreCompetencies.map((entry) {
+              return resumeText(16, "• $entry", false, false, Colors.black);
+            }).toList(),
+          ),
 
         // # Education
-        resumeAnchor(30, 400, 25, tt.education.en, true, false, Colors.blue),
-        resumeList(
-          30,
-          435,
-          resumes[mainResume].educations.map((entry) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                resumeText(16, '${entry.timeStart} - ${entry.timeEnd}', true, true, Colors.black),
-                resumeText(15, entry.department, true, false, Colors.black),
-                resumeText(16, entry.school, false, false, Colors.black),
-                const SizedBox(height: 10),
-              ],
-            );
-          }).toList(),
-        ),
+        if (resumes[mainResume].educations.isNotEmpty) resumeAnchor(30, 400, 23, tt.education.en, true, false, Colors.blue),
+        if (resumes[mainResume].educations.isNotEmpty)
+          resumeList(
+            30,
+            435,
+            resumes[mainResume].educations.map((entry) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  resumeText(14, '${entry.timeStart} - ${entry.timeEnd}', true, true, Colors.black),
+                  resumeText(14, entry.department, true, false, Colors.black),
+                  resumeText(14, entry.school, false, false, Colors.black),
+                  const SizedBox(height: 10),
+                ],
+              );
+            }).toList(),
+          ),
+
+        // # Certifications
+        if (resumes[mainResume].certifications.isNotEmpty) resumeAnchor(30, 600, 23, tt.certifications.en, true, false, Colors.blue),
+        if (resumes[mainResume].certifications.isNotEmpty)
+          resumeList(
+            30,
+            635,
+            resumes[mainResume].certifications.map((entry) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  resumeText(16, entry.description, true, false, Colors.black),
+                  resumeText(16, entry.organization, false, false, Colors.black),
+                  const SizedBox(height: 10),
+                ],
+              );
+            }).toList(),
+          ),
 
         // # Professional Development
-        resumeAnchor(30, 600, 25, tt.professionalDevelopment.en, true, false, Colors.blue),
-        resumeList(
-          30,
-          635,
-          resumes[mainResume].professionalDevelopments.map((entry) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                resumeText(18, entry.category, true, false, Colors.black),
-                resumeText(18, entry.description, false, false, Colors.black),
-                const SizedBox(height: 10),
-              ],
-            );
-          }).toList(),
-        ),
+        if (resumes[mainResume].professionalDevelopments.isNotEmpty) resumeAnchor(30, 600, 23, tt.professionalDevelopment.en, true, false, Colors.blue),
+        if (resumes[mainResume].professionalDevelopments.isNotEmpty)
+          resumeList(
+            30,
+            635,
+            resumes[mainResume].professionalDevelopments.map((entry) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  resumeText(16, entry.category, true, false, Colors.black),
+                  resumeText(16, entry.description, false, false, Colors.black),
+                  const SizedBox(height: 10),
+                ],
+              );
+            }).toList(),
+          ),
 
         // # Professional Development
-        resumeAnchor(30, 700, 25, tt.technicalProficiencies.en, true, false, Colors.blue),
-        resumeList(
-          30,
-          735,
-          resumes[mainResume].technicalProficiencies.map((entry) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                resumeText(18, entry.category, true, false, Colors.black),
-                resumeText(16, entry.description, false, false, Colors.black),
-                const SizedBox(height: 10),
-              ],
-            );
-          }).toList(),
-        ),
+        if (resumes[mainResume].technicalProficiencies.isNotEmpty) resumeAnchor(30, 700, 23, tt.technicalProficiencies.en, true, false, Colors.blue),
+        if (resumes[mainResume].technicalProficiencies.isNotEmpty)
+          resumeList(
+            30,
+            735,
+            resumes[mainResume].technicalProficiencies.map((entry) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  resumeText(16, entry.category, true, false, Colors.black),
+                  resumeText(14, entry.description, false, false, Colors.black),
+                  const SizedBox(height: 10),
+                ],
+              );
+            }).toList(),
+          ),
 
         // # Career Experience
-        resumeAnchor(380, 250, 25, tt.careerExperience.en, true, false, Colors.blue),
-        resumeList(
-          380,
-          285,
-          resumes[mainResume].careerExperiences.map((entry) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                resumeText(15, entry.companyName, false, false, Colors.black),
-                const SizedBox(height: 5),
-                resumeText(16, entry.jobTitle, true, false, Colors.black),
-                const SizedBox(height: 10),
-                resumeText(15, entry.summary, false, false, Colors.black),
-                const SizedBox(height: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: entry.descriptions.map((description) {
-                    return resumeText(15, "• $description", false, false, Colors.black);
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-              ],
-            );
-          }).toList(),
-        ),
+        if (resumes[mainResume].careerExperiences.isNotEmpty) resumeAnchor(380, 250, 23, tt.careerExperience.en, true, false, Colors.blue),
+        if (resumes[mainResume].careerExperiences.isNotEmpty)
+          resumeList(
+            380,
+            285,
+            resumes[mainResume].careerExperiences.map((entry) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  resumeText(15, entry.companyName, false, false, Colors.black),
+                  const SizedBox(height: 5),
+                  resumeText(16, entry.jobTitle, true, false, Colors.black),
+                  const SizedBox(height: 10),
+                  resumeText(15, entry.summary, false, false, Colors.black),
+                  const SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: entry.descriptions.map((description) {
+                      return resumeText(15, "• $description", false, false, Colors.black);
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              );
+            }).toList(),
+          ),
       ],
     );
   }
@@ -452,231 +475,950 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     TextEditingController basicPhone = TextEditingController(text: resumes[mainResume].phone);
     TextEditingController basicEmail = TextEditingController(text: resumes[mainResume].email);
     TextEditingController basicSummary = TextEditingController(text: resumes[mainResume].summary);
-    List<TextEditingController> urlAlias = resumes[mainResume].urls.map((element) => TextEditingController(text: element.alias)).toList();
-    List<TextEditingController> urlPaths = resumes[mainResume].urls.map((element) => TextEditingController(text: element.url)).toList();
+    List<TextEditingController> inputPart20 = resumes[mainResume].coreCompetencies.map((element) => TextEditingController(text: element)).toList();
+    List<TextEditingController> inputPart31 = resumes[mainResume].educations.map((element) => TextEditingController(text: element.timeStart)).toList();
+    List<TextEditingController> inputPart32 = resumes[mainResume].educations.map((element) => TextEditingController(text: element.timeEnd)).toList();
+    List<TextEditingController> inputPart33 = resumes[mainResume].educations.map((element) => TextEditingController(text: element.school)).toList();
+    List<TextEditingController> inputPart34 = resumes[mainResume].educations.map((element) => TextEditingController(text: element.department)).toList();
+    List<TextEditingController> inputPart41 = resumes[mainResume].certifications.map((element) => TextEditingController(text: element.description)).toList();
+    List<TextEditingController> inputPart42 = resumes[mainResume].certifications.map((element) => TextEditingController(text: element.organization)).toList();
+    List<TextEditingController> inputPart51 = resumes[mainResume].professionalDevelopments.map((element) => TextEditingController(text: element.category)).toList();
+    List<TextEditingController> inputPart52 = resumes[mainResume].professionalDevelopments.map((element) => TextEditingController(text: element.description)).toList();
+    List<TextEditingController> inputPart61 = resumes[mainResume].technicalProficiencies.map((element) => TextEditingController(text: element.category)).toList();
+    List<TextEditingController> inputPart62 = resumes[mainResume].technicalProficiencies.map((element) => TextEditingController(text: element.description)).toList();
+    List<TextEditingController> inputPart71 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.timeStart)).toList();
+    List<TextEditingController> inputPart72 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.timeEnd)).toList();
+    List<TextEditingController> inputPart73 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.companyName)).toList();
+    List<TextEditingController> inputPart74 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.jobTitle)).toList();
+    List<TextEditingController> inputPart75 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.summary)).toList();
     return <Widget>[
-      // # Basic Info
-      const SizedBox(height: 10),
-      ExpansionTile(
-        title: Text(
-          lang ? tt.basic.zh : tt.basic.en,
-          style: const TextStyle(color: Colors.black, fontSize: 20),
+      // # 1. Basic Info
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        children: <Widget>[
-          ListTile(
-            title: TextField(
-              controller: basicAlias,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: lang ? tt.basicAlias.zh : tt.basicAlias.en,
-              ),
-            ),
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.basic.zh : tt.basic.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
-          const SizedBox(height: 10),
-          ListTile(
-            title: TextField(
-              controller: basicName,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: lang ? tt.basicName.zh : tt.basicName.en,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          ListTile(
-            title: TextField(
-              controller: basicSite,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: lang ? tt.basicSite.zh : tt.basicSite.en,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          ListTile(
-            title: TextField(
-              controller: basicPhone,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: lang ? tt.basicPhone.zh : tt.basicPhone.en,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          ListTile(
-            title: TextField(
-              controller: basicEmail,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: lang ? tt.basicEmail.zh : tt.basicEmail.en,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          ListTile(
-            title: TextField(
-              maxLines: 10,
-              controller: basicSummary,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: lang ? tt.basicSummary.zh : tt.basicSummary.en,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  side: const BorderSide(width: 1),
-                  padding: const EdgeInsets.all(15),
+          children: <Widget>[
+            ListTile(
+              title: TextField(
+                controller: basicAlias,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: lang ? tt.basicAlias.zh : tt.basicAlias.en,
                 ),
-                onPressed: () {
-                  setState(() {
-                    resumes[mainResume].alias = basicAlias.text;
-                    resumes[mainResume].name = basicName.text;
-                    resumes[mainResume].site = basicSite.text;
-                    resumes[mainResume].phone = basicPhone.text;
-                    resumes[mainResume].email = basicEmail.text;
-                    resumes[mainResume].summary = basicSummary.text;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        duration: const Duration(seconds: 1),
-                        content: Text(lang ? tt.basicSaveSuccess.zh : tt.basicSaveSuccess.en),
-                      ),
-                    );
-                  });
-                },
-                child: Text(
-                  lang ? tt.basicSave.zh : tt.basicSave.en,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              title: TextField(
+                controller: basicName,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: lang ? tt.basicName.zh : tt.basicName.en,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              title: TextField(
+                controller: basicSite,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: lang ? tt.basicSite.zh : tt.basicSite.en,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              title: TextField(
+                controller: basicPhone,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: lang ? tt.basicPhone.zh : tt.basicPhone.en,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              title: TextField(
+                controller: basicEmail,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: lang ? tt.basicEmail.zh : tt.basicEmail.en,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              title: TextField(
+                maxLines: 10,
+                controller: basicSummary,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: lang ? tt.basicSummary.zh : tt.basicSummary.en,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
                   ),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-        ],
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].alias = basicAlias.text;
+                      resumes[mainResume].name = basicName.text;
+                      resumes[mainResume].site = basicSite.text;
+                      resumes[mainResume].phone = basicPhone.text;
+                      resumes[mainResume].email = basicEmail.text;
+                      resumes[mainResume].summary = basicSummary.text;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
+      const SizedBox(height: 10),
 
-      // # Url
-      const SizedBox(height: 10),
-      ExpansionTile(
-        title: Text(
-          lang ? tt.url.zh : tt.url.en,
-          style: const TextStyle(color: Colors.black, fontSize: 20),
+      // # 2. Core Competencies
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        children: <Widget>[
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: urlAlias.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 5);
-            },
-            itemBuilder: (context, urlIndex) {
-              return Column(
-                children: [
-                  Text("# No. ${urlIndex + 1}", style: const TextStyle(color: Colors.black, fontSize: 20)),
-                  const SizedBox(height: 5),
-                  ListTile(
-                    title: TextField(
-                      controller: urlAlias[urlIndex],
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: lang ? tt.urlAlias.zh : tt.urlAlias.en,
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.coreCompetenciesSetting.zh : tt.coreCompetenciesSetting.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          children: <Widget>[
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: inputPart20.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 7);
+              },
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart20[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.coreCompetency.zh : tt.coreCompetency.en,
+                        ),
                       ),
                     ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
                   ),
-                  const SizedBox(height: 5),
-                  ListTile(
-                    title: TextField(
-                      controller: urlPaths[urlIndex],
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: lang ? tt.urlPath.zh : tt.urlPath.en,
-                      ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].coreCompetencies.add('');
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemNew.zh : tt.itemNew.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (resumes[mainResume].coreCompetencies.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        resumes[mainResume].coreCompetencies.removeLast();
+                      });
+                    },
+                    child: Text(
+                      lang ? tt.itemDel.zh : tt.itemDel.en,
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
                     ),
                   ),
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  side: const BorderSide(width: 1),
-                  padding: const EdgeInsets.all(15),
-                ),
-                onPressed: () {
-                  setState(() {
-                    resumes[mainResume].urls.add(Url(alias: '', url: ''));
-                  });
-                },
-                child: Text(
-                  lang ? tt.urlNew.zh : tt.urlNew.en,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
+                const SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].coreCompetencies = inputPart20.asMap().entries.map((ele) => inputPart20[ele.key].text).toList();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              TextButton(
-                style: TextButton.styleFrom(
-                  side: const BorderSide(width: 1),
-                  padding: const EdgeInsets.all(15),
-                ),
-                onPressed: () {
-                  setState(() {
-                    resumes[mainResume].urls.removeLast();
-                  });
-                },
-                child: Text(
-                  lang ? tt.urlDel.zh : tt.urlDel.en,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              TextButton(
-                style: TextButton.styleFrom(
-                  side: const BorderSide(width: 1),
-                  padding: const EdgeInsets.all(15),
-                ),
-                onPressed: () {
-                  setState(() {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        duration: const Duration(seconds: 1),
-                        content: Text(lang ? tt.urlSaveSuccess.zh : tt.urlSaveSuccess.en),
-                      ),
-                    );
-                  });
-                },
-                child: Text(
-                  lang ? tt.urlSave.zh : tt.urlSave.en,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-        ],
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
+      const SizedBox(height: 10),
+
+      // # 3. Education
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.educationSetting.zh : tt.educationSetting.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          children: <Widget>[
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: inputPart31.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 7);
+              },
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: inputPart31[index],
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: lang ? tt.timeStart.zh : tt.timeStart.en,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20, child: Center(child: Text(" ~ "))),
+                          Expanded(
+                            child: TextField(
+                              controller: inputPart32[index],
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: lang ? tt.timeEnd.zh : tt.timeEnd.en,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart33[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.educationSchool.zh : tt.educationSchool.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart34[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.educationDepartment.zh : tt.educationDepartment.en,
+                        ),
+                      ),
+                    ),
+                    const Divider(thickness: 1, color: Colors.black),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].educations.add(Education(timeStart: '', timeEnd: '', school: '', department: ''));
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemNew.zh : tt.itemNew.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (resumes[mainResume].educations.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        resumes[mainResume].educations.removeLast();
+                      });
+                    },
+                    child: Text(
+                      lang ? tt.itemDel.zh : tt.itemDel.en,
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ),
+                const SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(side: const BorderSide(width: 1), padding: const EdgeInsets.all(15)),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].educations = inputPart31
+                          .asMap()
+                          .entries
+                          .map(
+                            (ele) => Education(
+                              timeStart: inputPart31[ele.key].text,
+                              timeEnd: inputPart32[ele.key].text,
+                              school: inputPart33[ele.key].text,
+                              department: inputPart34[ele.key].text,
+                            ),
+                          )
+                          .toList();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+      const SizedBox(height: 10),
+
+      // # 4.Certifications
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.certificationsSetting.zh : tt.certificationsSetting.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          children: <Widget>[
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: inputPart41.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 7);
+              },
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart41[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.certificationsDescription.zh : tt.certificationsDescription.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart42[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.certificationsOrganization.zh : tt.certificationsOrganization.en,
+                        ),
+                      ),
+                    ),
+                    const Divider(thickness: 1, color: Colors.black),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].certifications.add(Certification(organization: '', description: ''));
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemNew.zh : tt.itemNew.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (resumes[mainResume].certifications.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        resumes[mainResume].certifications.removeLast();
+                      });
+                    },
+                    child: Text(
+                      lang ? tt.itemDel.zh : tt.itemDel.en,
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ),
+                const SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(side: const BorderSide(width: 1), padding: const EdgeInsets.all(15)),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].certifications = inputPart41
+                          .asMap()
+                          .entries
+                          .map(
+                            (ele) => Certification(organization: inputPart42[ele.key].text, description: inputPart41[ele.key].text),
+                          )
+                          .toList();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+      const SizedBox(height: 10),
+
+      // # 5. Professional Development
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.professionalDevelopmentSetting.zh : tt.professionalDevelopmentSetting.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          children: <Widget>[
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: inputPart51.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 7);
+              },
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart51[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.professionalDevelopmentDescription.zh : tt.professionalDevelopmentDescription.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart52[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.professionalDevelopmentOrganization.zh : tt.professionalDevelopmentOrganization.en,
+                        ),
+                      ),
+                    ),
+                    const Divider(thickness: 1, color: Colors.black),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].professionalDevelopments.add(CategoryDescription(category: '', description: ''));
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemNew.zh : tt.itemNew.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (resumes[mainResume].professionalDevelopments.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        resumes[mainResume].professionalDevelopments.removeLast();
+                      });
+                    },
+                    child: Text(
+                      lang ? tt.itemDel.zh : tt.itemDel.en,
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ),
+                const SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(side: const BorderSide(width: 1), padding: const EdgeInsets.all(15)),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].professionalDevelopments = inputPart51
+                          .asMap()
+                          .entries
+                          .map(
+                            (ele) => CategoryDescription(description: inputPart52[ele.key].text, category: inputPart51[ele.key].text),
+                          )
+                          .toList();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+      const SizedBox(height: 10),
+
+      // # 6. Technical Proficiencies
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.technicalProficienciesSetting.zh : tt.technicalProficienciesSetting.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          children: <Widget>[
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: inputPart61.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 7);
+              },
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart61[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.technicalProficienciesCategory.zh : tt.technicalProficienciesCategory.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart62[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.technicalProficienciesDescription.zh : tt.technicalProficienciesDescription.en,
+                        ),
+                      ),
+                    ),
+                    const Divider(thickness: 1, color: Colors.black),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].technicalProficiencies.add(CategoryDescription(category: '', description: ''));
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemNew.zh : tt.itemNew.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (resumes[mainResume].technicalProficiencies.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        resumes[mainResume].technicalProficiencies.removeLast();
+                      });
+                    },
+                    child: Text(
+                      lang ? tt.itemDel.zh : tt.itemDel.en,
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ),
+                const SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(side: const BorderSide(width: 1), padding: const EdgeInsets.all(15)),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].technicalProficiencies = inputPart61
+                          .asMap()
+                          .entries
+                          .map(
+                            (ele) => CategoryDescription(description: inputPart62[ele.key].text, category: inputPart61[ele.key].text),
+                          )
+                          .toList();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+      const SizedBox(height: 10),
+
+      // # 7. Career Experience
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ExpansionTile(
+          title: Text(
+            lang ? tt.careerExperienceSetting.zh : tt.careerExperienceSetting.en,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          children: <Widget>[
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: inputPart71.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 7);
+              },
+              itemBuilder: (context, index) {
+                List<TextEditingController> hls = resumes[mainResume].careerExperiences[index].descriptions.map((e) => TextEditingController(text: e)).toList();
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: inputPart71[index],
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: lang ? tt.timeStart.zh : tt.timeStart.en,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20, child: Center(child: Text(" ~ "))),
+                          Expanded(
+                            child: TextField(
+                              controller: inputPart72[index],
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: lang ? tt.timeEnd.zh : tt.timeEnd.en,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart73[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.careerExperienceCompany.zh : tt.careerExperienceCompany.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart74[index],
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.careerExperienceJob.zh : tt.careerExperienceJob.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: TextField(
+                        controller: inputPart75[index],
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: lang ? tt.careerExperienceSummary.zh : tt.careerExperienceSummary.en,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    ListTile(
+                      title: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: hls.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(height: 12);
+                        },
+                        itemBuilder: (context, idx) {
+                          return TextField(
+                            controller: hls[idx],
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              labelText: "${lang ? tt.careerFocus.zh : tt.careerFocus.en} #${idx + 1}",
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            side: const BorderSide(width: 1),
+                            padding: const EdgeInsets.all(15),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              resumes[mainResume].careerExperiences[index].descriptions.add('');
+                            });
+                          },
+                          child: Text(
+                            lang ? tt.careerFocusAdd.zh : tt.careerFocusAdd.en,
+                            style: const TextStyle(color: Colors.black, fontSize: 15),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        if (resumes[mainResume].careerExperiences[index].descriptions.isNotEmpty)
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              side: const BorderSide(width: 1),
+                              padding: const EdgeInsets.all(15),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                resumes[mainResume].careerExperiences[index].descriptions.removeLast();
+                              });
+                            },
+                            child: Text(
+                              lang ? tt.careerFocusDel.zh : tt.careerFocusDel.en,
+                              style: const TextStyle(color: Colors.black, fontSize: 15),
+                            ),
+                          ),
+                      ],
+                    ),
+                    const Divider(thickness: 1, color: Colors.black),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].careerExperiences.add(
+                            CareerExperience(
+                              timeStart: '',
+                              timeEnd: '',
+                              companyName: '',
+                              jobTitle: '',
+                              summary: '',
+                              descriptions: [],
+                            ),
+                          );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemNew.zh : tt.itemNew.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (resumes[mainResume].careerExperiences.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        resumes[mainResume].careerExperiences.removeLast();
+                      });
+                    },
+                    child: Text(
+                      lang ? tt.itemDel.zh : tt.itemDel.en,
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ),
+                const SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(side: const BorderSide(width: 1), padding: const EdgeInsets.all(15)),
+                  onPressed: () {
+                    setState(() {
+                      resumes[mainResume].careerExperiences = inputPart71
+                          .asMap()
+                          .entries
+                          .map(
+                            (ele) => CareerExperience(
+                              timeStart: inputPart71[ele.key].text,
+                              timeEnd: inputPart72[ele.key].text,
+                              companyName: inputPart73[ele.key].text,
+                              jobTitle: inputPart74[ele.key].text,
+                              summary: inputPart75[ele.key].text,
+                              descriptions: [],
+                            ),
+                          )
+                          .toList();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 1),
+                          content: Text(lang ? tt.itemSaveSuccess.zh : tt.itemSaveSuccess.en),
+                        ),
+                      );
+                    });
+                  },
+                  child: Text(
+                    lang ? tt.itemSave.zh : tt.itemSave.en,
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+      const SizedBox(height: 10),
 
       // # Save PDF
-      const SizedBox(height: 10),
       TextButton(
         style: TextButton.styleFrom(
           side: const BorderSide(width: 1),
@@ -701,93 +1443,116 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   resumeAnchorPDF(30, 120, 18, resumes[mainResume].summary, false, false, PdfColor.fromHex("#000000")),
 
                   // # Core Competencies
-                  resumeAnchorPDF(30, 250, 25, tt.coreCompetencies.en, true, false, PdfColor.fromHex("#0000FF")),
-                  resumeListPDF(
-                    30,
-                    285,
-                    resumes[mainResume].coreCompetencies.map((entry) {
-                      return resumeTextPDF(18, "• $entry", false, false, PdfColor.fromHex("#000000"));
-                    }).toList(),
-                  ),
+                  if (resumes[mainResume].coreCompetencies.isNotEmpty) resumeAnchorPDF(30, 250, 25, tt.coreCompetencies.en, true, false, PdfColor.fromHex("#0000FF")),
+                  if (resumes[mainResume].coreCompetencies.isNotEmpty)
+                    resumeListPDF(
+                      30,
+                      285,
+                      resumes[mainResume].coreCompetencies.map((entry) {
+                        return resumeTextPDF(18, "• $entry", false, false, PdfColor.fromHex("#000000"));
+                      }).toList(),
+                    ),
 
                   // # Education
-                  resumeAnchorPDF(30, 400, 25, tt.education.en, true, false, PdfColor.fromHex("#0000FF")),
-                  resumeListPDF(
-                    30,
-                    435,
-                    resumes[mainResume].educations.map((entry) {
-                      return pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          resumeTextPDF(16, '${entry.timeStart} - ${entry.timeEnd}', true, true, PdfColor.fromHex("#000000")),
-                          resumeTextPDF(15, entry.department, true, false, PdfColor.fromHex("#000000")),
-                          resumeTextPDF(16, entry.school, false, false, PdfColor.fromHex("#000000")),
-                          pw.SizedBox(height: 10),
-                        ],
-                      );
-                    }).toList(),
-                  ),
+                  if (resumes[mainResume].educations.isNotEmpty) resumeAnchorPDF(30, 400, 25, tt.education.en, true, false, PdfColor.fromHex("#0000FF")),
+                  if (resumes[mainResume].educations.isNotEmpty)
+                    resumeListPDF(
+                      30,
+                      435,
+                      resumes[mainResume].educations.map((entry) {
+                        return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            resumeTextPDF(16, '${entry.timeStart} - ${entry.timeEnd}', true, true, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(15, entry.department, true, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(16, entry.school, false, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 10),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+
+                  // # Certifications
+                  if (resumes[mainResume].certifications.isNotEmpty) resumeAnchorPDF(30, 600, 25, tt.certifications.en, true, false, PdfColor.fromHex("#0000FF")),
+                  if (resumes[mainResume].certifications.isNotEmpty)
+                    resumeListPDF(
+                      30,
+                      635,
+                      resumes[mainResume].certifications.map((entry) {
+                        return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            resumeTextPDF(18, entry.description, true, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(18, entry.organization, false, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 10),
+                          ],
+                        );
+                      }).toList(),
+                    ),
 
                   // # Professional Development
-                  resumeAnchorPDF(30, 600, 25, tt.professionalDevelopment.en, true, false, PdfColor.fromHex("#0000FF")),
-                  resumeListPDF(
-                    30,
-                    635,
-                    resumes[mainResume].professionalDevelopments.map((entry) {
-                      return pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
-                          resumeTextPDF(18, entry.description, false, false, PdfColor.fromHex("#000000")),
-                          pw.SizedBox(height: 10),
-                        ],
-                      );
-                    }).toList(),
-                  ),
+                  if (resumes[mainResume].professionalDevelopments.isNotEmpty) resumeAnchorPDF(30, 600, 25, tt.professionalDevelopment.en, true, false, PdfColor.fromHex("#0000FF")),
+                  if (resumes[mainResume].professionalDevelopments.isNotEmpty)
+                    resumeListPDF(
+                      30,
+                      635,
+                      resumes[mainResume].professionalDevelopments.map((entry) {
+                        return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(18, entry.description, false, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 10),
+                          ],
+                        );
+                      }).toList(),
+                    ),
 
                   // # Professional Development
-                  resumeAnchorPDF(30, 700, 25, tt.technicalProficiencies.en, true, false, PdfColor.fromHex("#0000FF")),
-                  resumeListPDF(
-                    30,
-                    735,
-                    resumes[mainResume].technicalProficiencies.map((entry) {
-                      return pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
-                          resumeTextPDF(16, entry.description, false, false, PdfColor.fromHex("#000000")),
-                          pw.SizedBox(height: 10),
-                        ],
-                      );
-                    }).toList(),
-                  ),
+                  if (resumes[mainResume].technicalProficiencies.isNotEmpty) resumeAnchorPDF(30, 700, 25, tt.technicalProficiencies.en, true, false, PdfColor.fromHex("#0000FF")),
+                  if (resumes[mainResume].technicalProficiencies.isNotEmpty)
+                    resumeListPDF(
+                      30,
+                      735,
+                      resumes[mainResume].technicalProficiencies.map((entry) {
+                        return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(16, entry.description, false, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 10),
+                          ],
+                        );
+                      }).toList(),
+                    ),
 
                   // # Career Experience
-                  resumeAnchorPDF(380, 250, 25, tt.careerExperience.en, true, false, PdfColor.fromHex("#0000FF")),
-                  resumeListPDF(
-                    380,
-                    285,
-                    resumes[mainResume].careerExperiences.map((entry) {
-                      return pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          resumeTextPDF(15, entry.companyName, false, false, PdfColor.fromHex("#000000")),
-                          pw.SizedBox(height: 5),
-                          resumeTextPDF(16, entry.jobTitle, true, false, PdfColor.fromHex("#000000")),
-                          pw.SizedBox(height: 10),
-                          resumeTextPDF(15, entry.summary, false, false, PdfColor.fromHex("#000000")),
-                          pw.SizedBox(height: 10),
-                          pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: entry.descriptions.map((description) {
-                              return resumeTextPDF(15, "• $description", false, false, PdfColor.fromHex("#000000"));
-                            }).toList(),
-                          ),
-                          pw.SizedBox(height: 20),
-                        ],
-                      );
-                    }).toList(),
-                  ),
+                  if (resumes[mainResume].careerExperiences.isNotEmpty) resumeAnchorPDF(380, 250, 25, tt.careerExperience.en, true, false, PdfColor.fromHex("#0000FF")),
+                  if (resumes[mainResume].careerExperiences.isNotEmpty)
+                    resumeListPDF(
+                      380,
+                      285,
+                      resumes[mainResume].careerExperiences.map((entry) {
+                        return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            resumeTextPDF(15, entry.companyName, false, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 5),
+                            resumeTextPDF(16, entry.jobTitle, true, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 10),
+                            resumeTextPDF(15, entry.summary, false, false, PdfColor.fromHex("#000000")),
+                            pw.SizedBox(height: 10),
+                            pw.Column(
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: entry.descriptions.map((description) {
+                                return resumeTextPDF(15, "• $description", false, false, PdfColor.fromHex("#000000"));
+                              }).toList(),
+                            ),
+                            pw.SizedBox(height: 20),
+                          ],
+                        );
+                      }).toList(),
+                    ),
                 ],
               ),
             ),
