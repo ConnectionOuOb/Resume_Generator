@@ -1,9 +1,10 @@
+import 'package:flutter/services.dart';
+
 import 'object.dart';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 int mainResume = -1;
 bool lang = false;
@@ -22,7 +23,7 @@ class AutoResume extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Resume Generator",
-      theme: ThemeData(),
+      theme: ThemeData(fontFamily: 'NotoSansTC'),
       debugShowCheckedModeBanner: false,
       home: const Home(),
     );
@@ -38,9 +39,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   int newIndex = 0;
-
+  ByteData pdfFont = ByteData(0);
   dynamic anchor;
   final pdf = pw.Document();
+
+  @override
+  void initState() {
+    loadFont();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +259,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             ]
                           : resumeSetting(),
                     ),
-                    SizedBox(height: 200, width: 200 , child: resumeMdText(15, "test *markdown* **text**", Colors.black)),
                   ],
                 ),
               ),
@@ -263,28 +269,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  createPDF() async {
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) => pw.Column(
-          children: [
-            pw.Text('Hello World', style: const pw.TextStyle(fontSize: 40)),
-          ],
-        ),
-      ),
-    );
-
-    savePDF();
+  loadFont() async {
+    pdfFont = await rootBundle.load("fonts/NotoSansTC-Regular.ttf");
   }
 
   savePDF() async {
     Uint8List pdfInBytes = await pdf.save();
 
     final blob = html.Blob([pdfInBytes], 'application/pdf');
-    final url = html.Url.createObjectUrlFromBlob(blob);
 
     anchor = html.document.createElement('a') as html.AnchorElement
-      ..href = url
+      ..href = html.Url.createObjectUrlFromBlob(blob)
       ..style.display = 'none'
       ..download = resumes[mainResume].alias;
 
@@ -300,15 +295,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         resumeAnchor(30, 30, 35, resumes[mainResume].name, true, false, Colors.black),
 
         // # Info
-        resumeAnchor(520, 30, 15, '${resumes[mainResume].site} • ${resumes[mainResume].phone}', false, false, Colors.black),
+        resumeAnchor(520, 30, 15, '${resumes[mainResume].site}  ||  ${resumes[mainResume].phone}', false, false, Colors.black),
         resumeAnchor(520, 50, 15, resumes[mainResume].email, false, false, Colors.black),
 
         // # Qualifications Summary
-        resumeAnchor(30, 90, 25, lang ? tt.basicSummary.zh : tt.basicSummary.en, false, true, Colors.black),
+        resumeAnchor(30, 90, 25, tt.basicSummary.en, false, true, Colors.black),
         resumeAnchor(30, 120, 18, resumes[mainResume].summary, false, false, Colors.black),
 
         // # Core Competencies
-        resumeAnchor(30, 250, 25, lang ? tt.coreCompetencies.zh : tt.coreCompetencies.en, true, false, Colors.blue),
+        resumeAnchor(30, 250, 25, tt.coreCompetencies.en, true, false, Colors.blue),
         resumeList(
           30,
           285,
@@ -318,7 +313,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
 
         // # Education
-        resumeAnchor(30, 400, 25, lang ? tt.education.zh : tt.education.en, true, false, Colors.blue),
+        resumeAnchor(30, 400, 25, tt.education.en, true, false, Colors.blue),
         resumeList(
           30,
           435,
@@ -336,7 +331,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
 
         // # Professional Development
-        resumeAnchor(30, 600, 25, lang ? tt.professionalDevelopment.zh : tt.professionalDevelopment.en, true, false, Colors.blue),
+        resumeAnchor(30, 600, 25, tt.professionalDevelopment.en, true, false, Colors.blue),
         resumeList(
           30,
           635,
@@ -353,7 +348,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
 
         // # Professional Development
-        resumeAnchor(30, 700, 25, lang ? tt.technicalProficiencies.zh : tt.technicalProficiencies.en, true, false, Colors.blue),
+        resumeAnchor(30, 700, 25, tt.technicalProficiencies.en, true, false, Colors.blue),
         resumeList(
           30,
           735,
@@ -370,7 +365,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
 
         // # Career Experience
-        resumeAnchor(380, 250, 25, lang ? tt.careerExperience.zh : tt.careerExperience.en, true, false, Colors.blue),
+        resumeAnchor(380, 250, 25, tt.careerExperience.en, true, false, Colors.blue),
         resumeList(
           380,
           285,
@@ -379,13 +374,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 resumeText(15, entry.companyName, false, false, Colors.black),
+                const SizedBox(height: 5),
                 resumeText(16, entry.jobTitle, true, false, Colors.black),
-                const SizedBox(height: 5),
-                //resumeMdText(15, entry.summary, Colors.black),
+                const SizedBox(height: 10),
                 resumeText(15, entry.summary, false, false, Colors.black),
-                const SizedBox(height: 5),
-                //resumeText(15, entry.descriptions, true, false, Colors.black),
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: entry.descriptions.map((description) {
+                    return resumeText(15, "• $description", false, false, Colors.black);
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
               ],
             );
           }).toList(),
@@ -394,14 +394,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Padding resumeAnchor(double left, right, fontSize, String content, bool isBold, isItalic, Color fontColor) {
+  Widget resumeAnchor(double left, top, fontSize, String content, bool isBold, isItalic, Color fontColor) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(left, right, 0, 0),
+      padding: EdgeInsets.fromLTRB(left, top, 0, 0),
       child: resumeText(fontSize, content, isBold, isItalic, fontColor),
     );
   }
 
-  Text resumeText(double fontSize, String content, bool isBold, isItalic, Color fontColor) {
+  Widget resumeText(double fontSize, String content, bool isBold, isItalic, Color fontColor) {
     return Text(
       content,
       style: isItalic
@@ -412,20 +412,36 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Markdown resumeMdText(double fontSize, String content, Color fontColor) {
-    return Markdown(
-      selectable: true,
-      data: content,
-      styleSheet: MarkdownStyleSheet.fromTheme(
-        ThemeData(textTheme: TextTheme(bodyMedium: TextStyle(fontSize: fontSize, color: fontColor))),
-      ),
+  Widget resumeList(double left, top, List<Widget> content) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(left, top, 0, 0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: content),
     );
   }
 
-  Padding resumeList(double left, right, List<Widget> content) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(left, right, 0, 0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: content),
+  pw.Widget resumeAnchorPDF(double left, top, fontSize, String content, bool isBold, isItalic, PdfColor fontColor) {
+    return pw.Padding(
+      padding: pw.EdgeInsets.fromLTRB(left / 1.3, top / 1.2, 0, 0),
+      child: resumeTextPDF(fontSize, content, isBold, isItalic, fontColor),
+    );
+  }
+
+  pw.Widget resumeTextPDF(double fontSize, String content, bool isBold, isItalic, PdfColor fontColor) {
+    double scaleSize = fontSize / 1.4;
+    return pw.Text(
+      content,
+      style: isItalic
+          ? pw.TextStyle(color: fontColor, fontSize: scaleSize, fontStyle: pw.FontStyle.italic)
+          : isBold
+              ? pw.TextStyle(color: fontColor, fontSize: scaleSize, fontWeight: pw.FontWeight.bold)
+              : pw.TextStyle(color: fontColor, fontSize: scaleSize, font: pw.Font.ttf(pdfFont)),
+    );
+  }
+
+  pw.Widget resumeListPDF(double left, top, List<pw.Widget> content) {
+    return pw.Padding(
+      padding: pw.EdgeInsets.fromLTRB(left / 1.3, top / 1.2, 0, 0),
+      child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: content),
     );
   }
 
@@ -667,7 +683,117 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           padding: const EdgeInsets.all(20),
         ),
         onPressed: () {
-          createPDF();
+          pdf.addPage(
+            pw.Page(
+              pageFormat: PdfPageFormat.a4,
+              margin: const pw.EdgeInsets.all(0),
+              build: (pw.Context context) => pw.Stack(
+                children: <pw.Widget>[
+                  // # Name
+                  resumeAnchorPDF(30, 30, 35, resumes[mainResume].name, true, false, PdfColor.fromHex("#000000")),
+
+                  // # Info
+                  resumeAnchorPDF(520, 30, 15, '${resumes[mainResume].site} • ${resumes[mainResume].phone}', false, false, PdfColor.fromHex("#000000")),
+                  resumeAnchorPDF(520, 50, 15, resumes[mainResume].email, false, false, PdfColor.fromHex("#000000")),
+
+                  // # Qualifications Summary
+                  resumeAnchorPDF(30, 90, 25, tt.basicSummary.en, false, true, PdfColor.fromHex("#000000")),
+                  resumeAnchorPDF(30, 120, 18, resumes[mainResume].summary, false, false, PdfColor.fromHex("#000000")),
+
+                  // # Core Competencies
+                  resumeAnchorPDF(30, 250, 25, tt.coreCompetencies.en, true, false, PdfColor.fromHex("#0000FF")),
+                  resumeListPDF(
+                    30,
+                    285,
+                    resumes[mainResume].coreCompetencies.map((entry) {
+                      return resumeTextPDF(18, "• $entry", false, false, PdfColor.fromHex("#000000"));
+                    }).toList(),
+                  ),
+
+                  // # Education
+                  resumeAnchorPDF(30, 400, 25, tt.education.en, true, false, PdfColor.fromHex("#0000FF")),
+                  resumeListPDF(
+                    30,
+                    435,
+                    resumes[mainResume].educations.map((entry) {
+                      return pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          resumeTextPDF(16, '${entry.timeStart} - ${entry.timeEnd}', true, true, PdfColor.fromHex("#000000")),
+                          resumeTextPDF(15, entry.department, true, false, PdfColor.fromHex("#000000")),
+                          resumeTextPDF(16, entry.school, false, false, PdfColor.fromHex("#000000")),
+                          pw.SizedBox(height: 10),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+
+                  // # Professional Development
+                  resumeAnchorPDF(30, 600, 25, tt.professionalDevelopment.en, true, false, PdfColor.fromHex("#0000FF")),
+                  resumeListPDF(
+                    30,
+                    635,
+                    resumes[mainResume].professionalDevelopments.map((entry) {
+                      return pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
+                          resumeTextPDF(18, entry.description, false, false, PdfColor.fromHex("#000000")),
+                          pw.SizedBox(height: 10),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+
+                  // # Professional Development
+                  resumeAnchorPDF(30, 700, 25, tt.technicalProficiencies.en, true, false, PdfColor.fromHex("#0000FF")),
+                  resumeListPDF(
+                    30,
+                    735,
+                    resumes[mainResume].technicalProficiencies.map((entry) {
+                      return pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
+                          resumeTextPDF(16, entry.description, false, false, PdfColor.fromHex("#000000")),
+                          pw.SizedBox(height: 10),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+
+                  // # Career Experience
+                  resumeAnchorPDF(380, 250, 25, tt.careerExperience.en, true, false, PdfColor.fromHex("#0000FF")),
+                  resumeListPDF(
+                    380,
+                    285,
+                    resumes[mainResume].careerExperiences.map((entry) {
+                      return pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          resumeTextPDF(15, entry.companyName, false, false, PdfColor.fromHex("#000000")),
+                          pw.SizedBox(height: 5),
+                          resumeTextPDF(16, entry.jobTitle, true, false, PdfColor.fromHex("#000000")),
+                          pw.SizedBox(height: 10),
+                          resumeTextPDF(15, entry.summary, false, false, PdfColor.fromHex("#000000")),
+                          pw.SizedBox(height: 10),
+                          pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            children: entry.descriptions.map((description) {
+                              return resumeTextPDF(15, "• $description", false, false, PdfColor.fromHex("#000000"));
+                            }).toList(),
+                          ),
+                          pw.SizedBox(height: 20),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+          );
+
+          savePDF();
         },
         child: Text(
           lang ? tt.generate.zh : tt.generate.en,

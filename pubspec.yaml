@@ -16,7 +16,6 @@ dependencies:
   url_launcher: ^6.1.11
   universal_html: ^2.2.4
   cupertino_icons: ^1.0.2
-  flutter_markdown: ^0.6.17+3
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +24,11 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+  fonts:
+    - family: NotoSansTC
+      fonts:
+        - asset: fonts/NotoSansTC-Regular.ttf
+        - asset: fonts/NotoSansTC-Bold.ttf
+          weight: 700
   uses-material-design: true
 

@@ -354,7 +354,7 @@ PersonInfo connectionEn = PersonInfo(
       jobTitle: r'TSMC Onsite IT Assistant Engineer',
       timeStart: 'June 2023',
       timeEnd: 'September 2023',
-      summary: '123\n123\n123\n123',
+      summary: 'test test test',
       descriptions: [
         '*斜體字*',
         '**粗體字**',
