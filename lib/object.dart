@@ -48,14 +48,115 @@ class TextTranslation {
       );
 
   // # Basic
-  LocalText get basicInfo => LocalText(
-        en: "Basic Information",
-        zh: "基本資訊",
+  LocalText get basic => LocalText(
+        en: "1. Basic Information",
+        zh: "1. 基本資訊",
       );
 
-  LocalText get basicInfoName => LocalText(
+  LocalText get basicAlias => LocalText(
+        en: "Resume Alias",
+        zh: "履歷別稱",
+      );
+
+  LocalText get basicName => LocalText(
         en: "Name",
         zh: "姓名",
+      );
+
+  LocalText get basicSite => LocalText(
+        en: "Site",
+        zh: "住址",
+      );
+
+  LocalText get basicPhone => LocalText(
+        en: "Phone",
+        zh: "電話",
+      );
+
+  LocalText get basicEmail => LocalText(
+        en: "Email",
+        zh: "電子郵箱",
+      );
+
+  LocalText get basicSummary => LocalText(
+        en: "Qualifications Summary",
+        zh: "資格摘要",
+      );
+
+  LocalText get basicSave => LocalText(
+        en: "Save Basic Information",
+        zh: "儲存基本資訊",
+      );
+
+  LocalText get basicSaveSuccess => LocalText(
+        en: "Save Basic Information successful",
+        zh: "成功儲存基本資訊",
+      );
+
+  // # Url
+  LocalText get url => LocalText(
+        en: "2. Urls",
+        zh: "2. 超連結",
+      );
+
+  LocalText get urlAlias => LocalText(
+        en: "Name",
+        zh: "名稱",
+      );
+
+  LocalText get urlPath => LocalText(
+        en: "Name",
+        zh: "超連結位址",
+      );
+
+  LocalText get urlNew => LocalText(
+        en: "Add an Url",
+        zh: "新增一筆超連結",
+      );
+
+  LocalText get urlDel => LocalText(
+        en: "Delete an Url",
+        zh: "刪除一筆超連結",
+      );
+
+  LocalText get urlSave => LocalText(
+        en: "Save Urls",
+        zh: "儲存超連結",
+      );
+
+  LocalText get urlSaveSuccess => LocalText(
+        en: "Save Urls successful",
+        zh: "成功儲存超連結",
+      );
+
+  // ## Core Competencies
+  LocalText get coreCompetencies => LocalText(
+        en: "Core Competencies",
+        zh: "核心競爭力",
+      );
+
+  // ## Core Competencies
+  LocalText get education => LocalText(
+        en: "Education",
+        zh: "學歷",
+      );
+
+  // ## Core Competencies
+  LocalText get professionalDevelopment => LocalText(
+        en: "Professional Development",
+        zh: "持續專業發展",
+      );
+
+  // ## Technical Proficiencies
+  LocalText get technicalProficiencies => LocalText(
+        en: "Technical Proficiencies",
+        zh: "熟練技能",
+      );
+
+  // ## Career Experience
+  LocalText get careerExperience => LocalText(
+        en: "Career Experience",
+        zh: "職涯經歷",
       );
 
   // ## Generate
@@ -72,44 +173,6 @@ class LocalText {
   LocalText({
     required this.en,
     required this.zh,
-  });
-}
-
-class TabCtl {
-  bool isExtendSummary;
-  bool isExtendUrls;
-  bool isExtendCoreCompetencies;
-  bool isExtendEducations;
-  bool isExtendCertifications;
-  bool isExtendProfessionalDevelopments;
-  bool isExtendTechnicalProficiencies;
-  bool isExtendCareerExperiences;
-  bool isSelectSummary;
-  bool isSelectUrls;
-  bool isSelectCoreCompetencies;
-  bool isSelectEducations;
-  bool isSelectCertifications;
-  bool isSelectProfessionalDevelopments;
-  bool isSelectTechnicalProficiencies;
-  bool isSelectCareerExperiences;
-
-  TabCtl({
-    required this.isExtendSummary,
-    required this.isExtendUrls,
-    required this.isExtendCoreCompetencies,
-    required this.isExtendEducations,
-    required this.isExtendCertifications,
-    required this.isExtendProfessionalDevelopments,
-    required this.isExtendTechnicalProficiencies,
-    required this.isExtendCareerExperiences,
-    required this.isSelectSummary,
-    required this.isSelectUrls,
-    required this.isSelectCoreCompetencies,
-    required this.isSelectEducations,
-    required this.isSelectCertifications,
-    required this.isSelectProfessionalDevelopments,
-    required this.isSelectTechnicalProficiencies,
-    required this.isSelectCareerExperiences,
   });
 }
 
@@ -291,24 +354,36 @@ PersonInfo connectionEn = PersonInfo(
       jobTitle: r'TSMC Onsite IT Assistant Engineer',
       timeStart: 'June 2023',
       timeEnd: 'September 2023',
-      summary: '',
-      descriptions: [],
+      summary: '123\n123\n123\n123',
+      descriptions: [
+        '*斜體字*',
+        '**粗體字**',
+        '***斜體兼粗體***',
+      ],
     ),
     CareerExperience(
       companyName: r'BOVIA CO., LTD.',
       jobTitle: 'Software R&D Engineer',
       timeStart: 'January 2022',
       timeEnd: 'January 2024',
-      summary: '',
-      descriptions: [],
+      summary: '123\n123\n123\n123',
+      descriptions: [
+        '1',
+        '2',
+        '3',
+      ],
     ),
     CareerExperience(
       companyName: r'Computational Biology and Bioengineering Laboratory, IBSB, NYCU',
       jobTitle: 'MIS & IT Engineer',
       timeStart: 'September 2018',
       timeEnd: 'February 2023',
-      summary: '',
-      descriptions: [],
+      summary: '123\n123\n123\n123',
+      descriptions: [
+        '1',
+        '2',
+        '3',
+      ],
     ),
   ],
 );
