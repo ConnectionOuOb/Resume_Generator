@@ -551,38 +551,36 @@ PersonInfo connectionEn = PersonInfo(
     CareerExperience(
       companyName: 'Dimension Computer Technology CO., LTD.',
       jobTitle: r'TSMC Onsite IT Assistant Engineer',
-      timeStart: 'June 2023',
-      timeEnd: 'September 2023',
-      summary: 'test test test',
+      timeStart: '2023 June',
+      timeEnd: '2023 September',
+      summary: r"Following TSMC's SOP, handling system upgrades, installation, configuration, troubleshooting, and acceptance testing for PCs.",
       descriptions: [
-        '*斜體字*',
-        '**粗體字**',
-        '***斜體兼粗體***',
+        'Handling nearly all PCs for 5 semiconductor fabrication plants (F2, F3, F5, F12, AP3)',
+        'Completed system upgrades for approximately 800 PCs in the project.',
       ],
     ),
     CareerExperience(
       companyName: r'BOVIA CO., LTD.',
       jobTitle: 'Software R&D Engineer',
-      timeStart: 'January 2022',
-      timeEnd: 'January 2024',
-      summary: '123\n123\n123\n123',
+      timeStart: '2022 January',
+      timeEnd: '2024 January',
+      summary: 'Developing the license plate management system interface for a 5G AI patrol system'
+          ' using Flutter, featuring multi-language support, user-friendly interface, and high-performance.',
       descriptions: [
         r'2022 Chunghwa Telecom 5G Innovation Application Competition Champion',
-        '2',
+        r'Selling the software for $10K dollars to multiple countries and over 15+ clients',
       ],
     ),
     CareerExperience(
       companyName: r'Computational Biology and Bioengineering Laboratory, IBSB, NYCU',
       jobTitle: 'MIS & IT Administrator',
-      timeStart: 'September 2018',
-      timeEnd: 'February 2023',
+      timeStart: '2018 September',
+      timeEnd: '2023 February',
       summary: 'Manage server clusters and network architecture, set up Proxmox VE virtualization system,'
-          ' and establish a version control framework for software application development,'
-          ' along with semi-automated deployment.',
+          ' and establish a version control framework for software application development.',
       descriptions: [
-        '1',
-        '2',
-        '3',
+        'Managing 15 servers and 40 virtual machines',
+        'Using virtualization systems has increased computational efficiency by at least 50%',
       ],
     ),
   ],

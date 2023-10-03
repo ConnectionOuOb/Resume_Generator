@@ -25,8 +25,8 @@ List<Block> uis = [
   Block(show: true, l: 30, t: 285, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 3. Education
-  Block(show: true, l: 30, t: 400, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 30, t: 435, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 30, t: 410, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 30, t: 445, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 4. Certifications
   Block(show: false, l: 30, t: 600, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
@@ -41,8 +41,8 @@ List<Block> uis = [
   Block(show: true, l: 30, t: 735, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 7. Career Experience
-  Block(show: true, l: 420, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 420, t: 285, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 410, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 410, t: 285, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 ];
 List<Block> uiPDFs = uis.map((ui) => ui.toPDF()).toList();
 
@@ -398,128 +398,131 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Widget resumeGenerator() {
-    return Stack(
-      children: [
-        // # 0. Basic Info
-        if (uis[0].show) resumeAnchor(uis[0], resumes[mainResume].name),
-        if (uis[1].show) resumeAnchor(uis[1], '${resumes[mainResume].site} • ${resumes[mainResume].phone}'),
-        if (uis[2].show) resumeAnchor(uis[2], resumes[mainResume].email),
+    return Container(
+      padding: const EdgeInsets.only(right: 20),
+      child: Stack(
+        children: [
+          // # 0. Basic Info
+          if (uis[0].show) resumeAnchor(uis[0], resumes[mainResume].name),
+          if (uis[1].show) resumeAnchor(uis[1], '${resumes[mainResume].site} • ${resumes[mainResume].phone}'),
+          if (uis[2].show) resumeAnchor(uis[2], resumes[mainResume].email),
 
-        // # 1. Qualifications Summary
-        if (uis[3].show) resumeAnchor(uis[3], tt.basicSummary.en),
-        if (uis[4].show) resumeAnchor(uis[4], resumes[mainResume].summary),
+          // # 1. Qualifications Summary
+          if (uis[3].show) resumeAnchor(uis[3], tt.basicSummary.en),
+          if (uis[4].show) resumeAnchor(uis[4], resumes[mainResume].summary),
 
-        // # 2. Core Competencies
-        if (uis[5].show) resumeAnchor(uis[5], tt.coreCompetencies.en),
-        if (uis[6].show)
-          resumeList(
-            uis[6],
-            resumes[mainResume].coreCompetencies.map((entry) {
-              return resumeText(uis[6], "• $entry");
-            }).toList(),
-          ),
+          // # 2. Core Competencies
+          if (uis[5].show) resumeAnchor(uis[5], tt.coreCompetencies.en),
+          if (uis[6].show)
+            resumeList(
+              uis[6],
+              resumes[mainResume].coreCompetencies.map((entry) {
+                return resumeText(uis[6], "• $entry");
+              }).toList(),
+            ),
 
-        // # 3. Education
-        if (uis[7].show) resumeAnchor(uis[7], tt.education.en),
-        if (uis[8].show)
-          resumeList(
-            uis[8],
-            resumes[mainResume].educations.map((entry) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  resumeText(uis[8].toBold(), '${entry.timeStart} - ${entry.timeEnd}'),
-                  resumeText(uis[8].toBold(), entry.department),
-                  resumeText(uis[8], entry.school),
-                  const SizedBox(height: 10),
-                ],
-              );
-            }).toList(),
-          ),
+          // # 3. Education
+          if (uis[7].show) resumeAnchor(uis[7], tt.education.en),
+          if (uis[8].show)
+            resumeList(
+              uis[8],
+              resumes[mainResume].educations.map((entry) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    resumeText(uis[8].toBold(), '${entry.timeStart} - ${entry.timeEnd}'),
+                    resumeText(uis[8].toBold(), entry.department),
+                    resumeText(uis[8], entry.school),
+                    const SizedBox(height: 10),
+                  ],
+                );
+              }).toList(),
+            ),
 
-        // # 4. Certifications
-        if (uis[9].show) resumeAnchor(uis[9], tt.certifications.en),
-        if (uis[10].show)
-          resumeList(
-            uis[10],
-            resumes[mainResume].certifications.map((entry) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  resumeText(uis[10].toBold(), entry.description),
-                  resumeText(uis[10], entry.organization),
-                  const SizedBox(height: 10),
-                ],
-              );
-            }).toList(),
-          ),
+          // # 4. Certifications
+          if (uis[9].show) resumeAnchor(uis[9], tt.certifications.en),
+          if (uis[10].show)
+            resumeList(
+              uis[10],
+              resumes[mainResume].certifications.map((entry) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    resumeText(uis[10].toBold(), entry.description),
+                    resumeText(uis[10], entry.organization),
+                    const SizedBox(height: 10),
+                  ],
+                );
+              }).toList(),
+            ),
 
-        // # 5. Professional Development
-        if (uis[11].show) resumeAnchor(uis[11], tt.professionalDevelopment.en),
-        if (uis[12].show)
-          resumeList(
-            uis[12],
-            resumes[mainResume].professionalDevelopments.map((entry) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  resumeText(uis[12].toBold(), entry.category),
-                  resumeText(uis[12], entry.description),
-                  const SizedBox(height: 10),
-                ],
-              );
-            }).toList(),
-          ),
+          // # 5. Professional Development
+          if (uis[11].show) resumeAnchor(uis[11], tt.professionalDevelopment.en),
+          if (uis[12].show)
+            resumeList(
+              uis[12],
+              resumes[mainResume].professionalDevelopments.map((entry) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    resumeText(uis[12].toBold(), entry.category),
+                    resumeText(uis[12], entry.description),
+                    const SizedBox(height: 10),
+                  ],
+                );
+              }).toList(),
+            ),
 
-        // # 6. Professional Development
-        if (uis[13].show) resumeAnchor(uis[13], tt.technicalProficiencies.en),
-        if (uis[14].show)
-          resumeList(
-            uis[14],
-            resumes[mainResume].technicalProficiencies.map((entry) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  resumeText(uis[14].toBold(), entry.category),
-                  resumeText(uis[14], entry.description),
-                  const SizedBox(height: 10),
-                ],
-              );
-            }).toList(),
-          ),
+          // # 6. Professional Development
+          if (uis[13].show) resumeAnchor(uis[13], tt.technicalProficiencies.en),
+          if (uis[14].show)
+            resumeList(
+              uis[14],
+              resumes[mainResume].technicalProficiencies.map((entry) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    resumeText(uis[14].toBold(), entry.category),
+                    resumeText(uis[14], entry.description),
+                    const SizedBox(height: 10),
+                  ],
+                );
+              }).toList(),
+            ),
 
-        // # 7. Career Experience
-        if (uis[15].show) resumeAnchor(uis[15], tt.careerExperience.en),
-        if (uis[16].show)
-          resumeList(
-            uis[16],
-            resumes[mainResume].careerExperiences.map((entry) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  resumeText(uis[16].toBold(), "${entry.timeStart} ~ ${entry.timeEnd}"),
-                  const SizedBox(height: 2),
-                  resumeText(uis[16], entry.companyName),
-                  const SizedBox(height: 2),
-                  resumeText(uis[16].toBold(), entry.jobTitle),
-                  const SizedBox(height: 2),
-                  resumeText(
-                    uis[16],
-                    entry.summary,
-                  ),
-                  const SizedBox(height: 5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: entry.descriptions.map((description) {
-                      return resumeText(uis[16], "• $description");
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              );
-            }).toList(),
-          ),
-      ],
+          // # 7. Career Experience
+          if (uis[15].show) resumeAnchor(uis[15], tt.careerExperience.en),
+          if (uis[16].show)
+            resumeList(
+              uis[16],
+              resumes[mainResume].careerExperiences.map((entry) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    resumeText(uis[16].toBold(), "${entry.timeStart} ~ ${entry.timeEnd}"),
+                    const SizedBox(height: 2),
+                    resumeText(uis[16], entry.companyName),
+                    const SizedBox(height: 2),
+                    resumeText(uis[16].toBold(), entry.jobTitle),
+                    const SizedBox(height: 2),
+                    resumeText(
+                      uis[16],
+                      entry.summary,
+                    ),
+                    const SizedBox(height: 5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: entry.descriptions.map((description) {
+                        return resumeText(uis[16], "• $description");
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                );
+              }).toList(),
+            ),
+        ],
+      ),
     );
   }
 
@@ -1641,11 +1644,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           padding: const EdgeInsets.all(20),
         ),
         onPressed: () {
-          pdf.addPage(
-            pw.Page(
-              pageFormat: PdfPageFormat.a4,
-              margin: const pw.EdgeInsets.all(0),
-              build: (pw.Context context) => pw.Stack(
+          pdf.addPage(pw.Page(
+            pageFormat: PdfPageFormat.a4,
+            margin: const pw.EdgeInsets.all(0),
+            build: (pw.Context context) => pw.Container(
+              padding: const pw.EdgeInsets.only(right: 20 / 1.3),
+              child: pw.Stack(
                 children: <pw.Widget>[
                   // # 0. Basic Info
                   if (uiPDFs[0].show) resumeAnchorPDF(uiPDFs[0], resumes[mainResume].name),
@@ -1769,7 +1773,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ],
               ),
             ),
-          );
+          ));
 
           savePDF();
         },
