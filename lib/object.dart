@@ -1,4 +1,72 @@
+double pdfFactor = 1.3;
+
 class TextTranslation {
+  // ## block setting
+  LocalText get axisX => LocalText(
+        en: "X-axis",
+        zh: "X軸",
+      );
+
+  LocalText get axisY => LocalText(
+        en: "Y-axis",
+        zh: "Y軸",
+      );
+
+  LocalText get fontSize => LocalText(
+        en: "Font Size",
+        zh: "字型大小",
+      );
+
+  LocalText get show => LocalText(
+        en: "Show",
+        zh: "顯示",
+      );
+
+  LocalText get bold => LocalText(
+        en: "Bold",
+        zh: "粗體",
+      );
+
+  LocalText get italic => LocalText(
+        en: "Italic",
+        zh: "斜體",
+      );
+
+  LocalText get posName => LocalText(
+        en: "Name setting",
+        zh: "姓名設定",
+      );
+
+  LocalText get posDetail1 => LocalText(
+        en: "Contact info setting",
+        zh: "聯絡方式設定",
+      );
+
+  LocalText get posDetail2 => LocalText(
+        en: "Email setting",
+        zh: "電子信箱設定",
+      );
+
+  LocalText get summaryTitle => LocalText(
+        en: "Qualifications Summary Title setting",
+        zh: "資格摘要標題設定",
+      );
+
+  LocalText get summaryContent => LocalText(
+        en: "Qualifications Summary Content setting",
+        zh: "資格摘要內容設定",
+      );
+
+  LocalText get title => LocalText(
+        en: "Title setting",
+        zh: "標題設定",
+      );
+
+  LocalText get content => LocalText(
+        en: "Content setting",
+        zh: "內容設定",
+      );
+
   // ## Language
   LocalText get languageSetting => LocalText(
         en: "Language Setting",
@@ -260,6 +328,41 @@ class TextTranslation {
         en: "generate resume",
         zh: "生成履歷",
       );
+}
+
+/// # Color encode
+/// ## 1 = Black : Colors.Black / PdfColors.Black
+/// ## 2 = White : Colors.White / PdfColors.White
+/// ## 3 = Blue  : Colors.Blue  / PdfColors.Blue
+class Block {
+  bool show;
+  double l, t;
+  double fontSize;
+  int fontColor;
+  int backgroundColor;
+  bool isBold, isItalic;
+
+  Block toPDF() => Block(
+        show: show,
+        l: l / pdfFactor,
+        t: t / pdfFactor,
+        fontSize: fontSize / pdfFactor,
+        fontColor: fontColor,
+        backgroundColor: backgroundColor,
+        isBold: isBold,
+        isItalic: isItalic,
+      );
+
+  Block({
+    required this.show,
+    required this.l,
+    required this.t,
+    required this.fontSize,
+    required this.fontColor,
+    required this.backgroundColor,
+    required this.isBold,
+    required this.isItalic,
+  });
 }
 
 class LocalText {

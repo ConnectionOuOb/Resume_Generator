@@ -11,6 +11,41 @@ bool lang = false;
 double a4Width = 794;
 TextTranslation tt = TextTranslation();
 List<PersonInfo> resumes = [];
+List<Block> uis = [
+  // # 0. Basic Info
+  Block(show: true, l: 30, t: 30, fontSize: 30, fontColor: 1, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 500, t: 32, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 500, t: 52, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 1. Qualifications Summary
+  Block(show: true, l: 30, t: 90, fontSize: 22, fontColor: 1, backgroundColor: 2, isBold: true, isItalic: true),
+  Block(show: true, l: 30, t: 120, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 2. Core Competencies
+  Block(show: true, l: 30, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 30, t: 285, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 3. Education
+  Block(show: true, l: 30, t: 400, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 30, t: 435, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 4. Certifications
+  Block(show: false, l: 30, t: 600, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: false, l: 30, t: 635, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 5. Professional Development
+  Block(show: true, l: 30, t: 600, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 30, t: 635, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 6. Technical Proficiencies
+  Block(show: true, l: 30, t: 700, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 30, t: 735, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+
+  // # 7. Career Experience
+  Block(show: true, l: 400, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 400, t: 285, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+];
+List<Block> uiPDFs = uis.map((ui) => ui.toPDF()).toList();
 
 void main() {
   runApp(const AutoResume());
@@ -269,145 +304,215 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  loadFont() async {
-    pdfFont = await rootBundle.load("fonts/NotoSansTC-Regular.ttf");
-  }
+  Widget blockSetting(Block obj) {
+    TextEditingController le = TextEditingController(text: obj.l.toString());
+    TextEditingController te = TextEditingController(text: obj.t.toString());
+    TextEditingController fe = TextEditingController(text: obj.fontSize.toString());
 
-  savePDF() async {
-    Uint8List pdfInBytes = await pdf.save();
-
-    final blob = html.Blob([pdfInBytes], 'application/pdf');
-
-    anchor = html.document.createElement('a') as html.AnchorElement
-      ..href = html.Url.createObjectUrlFromBlob(blob)
-      ..style.display = 'none'
-      ..download = resumes[mainResume].alias;
-
-    html.document.body?.children.add(anchor);
-
-    anchor.click();
+    le.selection = TextSelection.fromPosition(TextPosition(offset: le.text.length));
+    te.selection = TextSelection.fromPosition(TextPosition(offset: te.text.length));
+    fe.selection = TextSelection.fromPosition(TextPosition(offset: fe.text.length));
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            const SizedBox(width: 15),
+            Flexible(
+              child: TextField(
+                controller: le,
+                decoration: InputDecoration(border: const OutlineInputBorder(), labelText: lang ? tt.axisX.zh : tt.axisX.en),
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                onChanged: (val) {
+                  setState(() {
+                    obj.l = double.parse(val);
+                  });
+                },
+              ),
+            ),
+            const SizedBox(width: 10),
+            Flexible(
+              child: TextField(
+                controller: te,
+                decoration: InputDecoration(border: const OutlineInputBorder(), labelText: lang ? tt.axisY.zh : tt.axisY.en),
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                onChanged: (val) {
+                  setState(() {
+                    obj.t = double.parse(val);
+                  });
+                },
+              ),
+            ),
+            const SizedBox(width: 10),
+            Flexible(
+              child: TextField(
+                controller: fe,
+                decoration: InputDecoration(border: const OutlineInputBorder(), labelText: lang ? tt.fontSize.zh : tt.fontSize.en),
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                onChanged: (val) {
+                  setState(() {
+                    obj.fontSize = double.parse(val);
+                  });
+                },
+              ),
+            ),
+            const SizedBox(width: 15),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(lang ? tt.show.zh : tt.show.en),
+            Switch(
+              value: obj.show,
+              onChanged: (value) {
+                setState(() {
+                  obj.show = value;
+                });
+              },
+            ),
+            const SizedBox(width: 20),
+            Text(lang ? tt.bold.zh : tt.bold.en),
+            Switch(
+              value: obj.isBold,
+              onChanged: (value) {
+                setState(() {
+                  obj.isBold = value;
+                });
+              },
+            ),
+            const SizedBox(width: 20),
+            Text(lang ? tt.italic.zh : tt.italic.en),
+            Switch(
+              value: obj.isItalic,
+              onChanged: (value) {
+                setState(() {
+                  obj.isItalic = value;
+                });
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
   }
 
   Widget resumeGenerator() {
     return Stack(
       children: [
-        // # Name
-        resumeAnchor(30, 30, 30, resumes[mainResume].name, true, false, Colors.black),
+        // # 0. Basic Info
+        if (uis[0].show) resumeAnchor(uis[0], resumes[mainResume].name),
+        if (uis[1].show) resumeAnchor(uis[1], '${resumes[mainResume].site}  •  ${resumes[mainResume].phone}'),
+        if (uis[2].show) resumeAnchor(uis[2], resumes[mainResume].email),
 
-        // # Info
-        resumeAnchor(520, 30, 12, '${resumes[mainResume].site}  •  ${resumes[mainResume].phone}', false, false, Colors.black),
-        resumeAnchor(520, 50, 12, resumes[mainResume].email, false, false, Colors.black),
+        // # 1. Qualifications Summary
+        if (uis[3].show) resumeAnchor(uis[3], tt.basicSummary.en),
+        if (uis[4].show) resumeAnchor(uis[4], resumes[mainResume].summary),
 
-        // # Qualifications Summary
-        resumeAnchor(30, 90, 22, tt.basicSummary.en, false, true, Colors.black),
-        resumeAnchor(30, 120, 15, resumes[mainResume].summary, false, false, Colors.black),
-
-        // # Core Competencies
-        if (resumes[mainResume].coreCompetencies.isNotEmpty) resumeAnchor(30, 250, 22, tt.coreCompetencies.en, true, false, Colors.blue),
-        if (resumes[mainResume].coreCompetencies.isNotEmpty)
+        // # 2. Core Competencies
+        if (uis[5].show) resumeAnchor(uis[5], tt.coreCompetencies.en),
+        if (uis[6].show)
           resumeList(
-            30,
-            285,
+            uis[6],
             resumes[mainResume].coreCompetencies.map((entry) {
-              return resumeText(16, "• $entry", false, false, Colors.black);
+              return resumeText(uis[6], "• $entry");
             }).toList(),
           ),
 
-        // # Education
-        if (resumes[mainResume].educations.isNotEmpty) resumeAnchor(30, 400, 23, tt.education.en, true, false, Colors.blue),
-        if (resumes[mainResume].educations.isNotEmpty)
+        // # 3. Education
+        if (uis[7].show) resumeAnchor(uis[7], tt.education.en),
+        if (uis[8].show)
           resumeList(
-            30,
-            435,
+            uis[8],
             resumes[mainResume].educations.map((entry) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(14, '${entry.timeStart} - ${entry.timeEnd}', true, true, Colors.black),
-                  resumeText(14, entry.department, true, false, Colors.black),
-                  resumeText(14, entry.school, false, false, Colors.black),
+                  resumeText(uis[8], '${entry.timeStart} - ${entry.timeEnd}'),
+                  resumeText(uis[8], entry.department),
+                  resumeText(uis[8], entry.school),
                   const SizedBox(height: 10),
                 ],
               );
             }).toList(),
           ),
 
-        // # Certifications
-        if (resumes[mainResume].certifications.isNotEmpty) resumeAnchor(30, 600, 23, tt.certifications.en, true, false, Colors.blue),
-        if (resumes[mainResume].certifications.isNotEmpty)
+        // # 4. Certifications
+        if (uis[9].show) resumeAnchor(uis[9], tt.certifications.en),
+        if (uis[10].show)
           resumeList(
-            30,
-            635,
+            uis[10],
             resumes[mainResume].certifications.map((entry) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(16, entry.description, true, false, Colors.black),
-                  resumeText(16, entry.organization, false, false, Colors.black),
+                  resumeText(uis[10], entry.description),
+                  resumeText(uis[10], entry.organization),
                   const SizedBox(height: 10),
                 ],
               );
             }).toList(),
           ),
 
-        // # Professional Development
-        if (resumes[mainResume].professionalDevelopments.isNotEmpty) resumeAnchor(30, 600, 23, tt.professionalDevelopment.en, true, false, Colors.blue),
-        if (resumes[mainResume].professionalDevelopments.isNotEmpty)
+        // # 5. Professional Development
+        if (uis[11].show) resumeAnchor(uis[11], tt.professionalDevelopment.en),
+        if (uis[12].show)
           resumeList(
-            30,
-            635,
+            uis[12],
             resumes[mainResume].professionalDevelopments.map((entry) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(16, entry.category, true, false, Colors.black),
-                  resumeText(16, entry.description, false, false, Colors.black),
+                  resumeText(uis[12], entry.category),
+                  resumeText(uis[12], entry.description),
                   const SizedBox(height: 10),
                 ],
               );
             }).toList(),
           ),
 
-        // # Professional Development
-        if (resumes[mainResume].technicalProficiencies.isNotEmpty) resumeAnchor(30, 700, 23, tt.technicalProficiencies.en, true, false, Colors.blue),
-        if (resumes[mainResume].technicalProficiencies.isNotEmpty)
+        // # 6. Professional Development
+        if (uis[13].show) resumeAnchor(uis[13], tt.technicalProficiencies.en),
+        if (uis[14].show)
           resumeList(
-            30,
-            735,
+            uis[14],
             resumes[mainResume].technicalProficiencies.map((entry) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(16, entry.category, true, false, Colors.black),
-                  resumeText(14, entry.description, false, false, Colors.black),
+                  resumeText(uis[14], entry.category),
+                  resumeText(uis[14], entry.description),
                   const SizedBox(height: 10),
                 ],
               );
             }).toList(),
           ),
 
-        // # Career Experience
-        if (resumes[mainResume].careerExperiences.isNotEmpty) resumeAnchor(380, 250, 23, tt.careerExperience.en, true, false, Colors.blue),
-        if (resumes[mainResume].careerExperiences.isNotEmpty)
+        // # 7. Career Experience
+        if (uis[15].show) resumeAnchor(uis[15], tt.careerExperience.en),
+        if (uis[16].show)
           resumeList(
-            380,
-            285,
+            uis[16],
             resumes[mainResume].careerExperiences.map((entry) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(15, entry.companyName, false, false, Colors.black),
+                  resumeText(uis[16], entry.companyName),
                   const SizedBox(height: 2),
-                  resumeText(16, entry.jobTitle, true, false, Colors.black),
+                  resumeText(uis[16], entry.jobTitle),
                   const SizedBox(height: 2),
-                  resumeText(16, "${entry.timeStart} ~ ${entry.timeEnd}", false, true, Colors.black),
+                  resumeText(uis[16], "${entry.timeStart} ~ ${entry.timeEnd}"),
                   const SizedBox(height: 2),
-                  resumeText(15, entry.summary, false, false, Colors.black),
+                  resumeText(
+                    uis[16],
+                    entry.summary,
+                  ),
                   const SizedBox(height: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: entry.descriptions.map((description) {
-                      return resumeText(15, "• $description", false, false, Colors.black);
+                      return resumeText(uis[16], "• $description");
                     }).toList(),
                   ),
                   const SizedBox(height: 20),
@@ -419,53 +524,78 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget resumeAnchor(double left, top, fontSize, String content, bool isBold, isItalic, Color fontColor) {
+  Widget resumeAnchor(Block setting, String content) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(left, top, 0, 0),
-      child: resumeText(fontSize, content, isBold, isItalic, fontColor),
+      padding: EdgeInsets.fromLTRB(setting.l, setting.t, 0, 0),
+      child: resumeText(setting, content),
     );
   }
 
-  Widget resumeText(double fontSize, String content, bool isBold, isItalic, Color fontColor) {
+  Widget resumeText(Block setting, String content) {
+    Color showColor = Colors.black;
+
+    switch (setting.fontColor) {
+      case 1:
+        showColor = Colors.black;
+        break;
+      case 2:
+        showColor = Colors.white;
+        break;
+      case 3:
+        showColor = Colors.blue;
+        break;
+    }
     return Text(
       content,
-      style: isItalic
-          ? TextStyle(color: fontColor, fontSize: fontSize, fontStyle: FontStyle.italic)
-          : isBold
-              ? TextStyle(color: fontColor, fontSize: fontSize, fontWeight: FontWeight.bold)
-              : TextStyle(color: fontColor, fontSize: fontSize),
+      style: setting.isItalic
+          ? TextStyle(color: showColor, fontSize: setting.fontSize, fontStyle: FontStyle.italic)
+          : setting.isBold
+              ? TextStyle(color: showColor, fontSize: setting.fontSize, fontWeight: FontWeight.bold)
+              : TextStyle(color: showColor, fontSize: setting.fontSize),
     );
   }
 
-  Widget resumeList(double left, top, List<Widget> content) {
+  Widget resumeList(Block setting, List<Widget> content) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(left, top, 0, 0),
+      padding: EdgeInsets.fromLTRB(setting.l, setting.t, 0, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: content),
     );
   }
 
-  pw.Widget resumeAnchorPDF(double left, top, fontSize, String content, bool isBold, isItalic, PdfColor fontColor) {
+  pw.Widget resumeAnchorPDF(Block setting, String content) {
     return pw.Padding(
-      padding: pw.EdgeInsets.fromLTRB(left / 1.3, top / 1.2, 0, 0),
-      child: resumeTextPDF(fontSize, content, isBold, isItalic, fontColor),
+      padding: pw.EdgeInsets.fromLTRB(setting.l, setting.t, 0, 0),
+      child: resumeTextPDF(setting, content),
     );
   }
 
-  pw.Widget resumeTextPDF(double fontSize, String content, bool isBold, isItalic, PdfColor fontColor) {
-    double scaleSize = fontSize / 1.4;
+  pw.Widget resumeTextPDF(Block setting, String content) {
+    PdfColor showColor = PdfColors.black;
+
+    switch (setting.fontColor) {
+      case 1:
+        showColor = PdfColors.black;
+        break;
+      case 2:
+        showColor = PdfColors.white;
+        break;
+      case 3:
+        showColor = PdfColors.blue;
+        break;
+    }
     return pw.Text(
       content,
-      style: isItalic
-          ? pw.TextStyle(color: fontColor, fontSize: scaleSize, fontStyle: pw.FontStyle.italic)
-          : isBold
-              ? pw.TextStyle(color: fontColor, fontSize: scaleSize, fontWeight: pw.FontWeight.bold)
-              : pw.TextStyle(color: fontColor, fontSize: scaleSize, font: pw.Font.ttf(pdfFont)),
+      style: setting.isItalic
+          ? pw.TextStyle(color: showColor, fontSize: setting.fontSize, fontStyle: pw.FontStyle.italic)
+          : setting.isBold
+              ? pw.TextStyle(color: showColor, fontSize: setting.fontSize, fontWeight: pw.FontWeight.bold)
+              : pw.TextStyle(color: showColor, fontSize: setting.fontSize, font: pw.Font.ttf(pdfFont)),
     );
   }
 
-  pw.Widget resumeListPDF(double left, top, List<pw.Widget> content) {
+  pw.Widget resumeListPDF(Block setting, List<pw.Widget> content) {
     return pw.Padding(
-      padding: pw.EdgeInsets.fromLTRB(left / 1.3, top / 1.2, 0, 0),
+      padding: pw.EdgeInsets.fromLTRB(setting.l, setting.t, 0, 0),
       child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: content),
     );
   }
@@ -507,6 +637,31 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.posName.zh : tt.posName.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[0]),
+            Text(
+              lang ? tt.posDetail1.zh : tt.posDetail1.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[1]),
+            Text(
+              lang ? tt.posDetail2.zh : tt.posDetail2.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[2]),
+            Text(
+              lang ? tt.summaryTitle.zh : tt.summaryTitle.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[3]),
+            Text(
+              lang ? tt.summaryContent.zh : tt.summaryContent.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[4]),
             ListTile(
               title: TextField(
                 controller: basicAlias,
@@ -620,6 +775,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.title.zh : tt.title.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[5]),
+            Text(
+              lang ? tt.content.zh : tt.content.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[6]),
             ListView.separated(
               shrinkWrap: true,
               itemCount: inputPart20.length,
@@ -721,6 +886,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.title.zh : tt.title.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[7]),
+            Text(
+              lang ? tt.content.zh : tt.content.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[8]),
             ListView.separated(
               shrinkWrap: true,
               itemCount: inputPart31.length,
@@ -866,6 +1041,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.title.zh : tt.title.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[9]),
+            Text(
+              lang ? tt.content.zh : tt.content.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[10]),
             ListView.separated(
               shrinkWrap: true,
               itemCount: inputPart41.length,
@@ -980,6 +1165,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.title.zh : tt.title.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[11]),
+            Text(
+              lang ? tt.content.zh : tt.content.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[12]),
             ListView.separated(
               shrinkWrap: true,
               itemCount: inputPart51.length,
@@ -1094,6 +1289,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.title.zh : tt.title.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[13]),
+            Text(
+              lang ? tt.content.zh : tt.content.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[14]),
             ListView.separated(
               shrinkWrap: true,
               itemCount: inputPart61.length,
@@ -1208,6 +1413,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           children: <Widget>[
+            Text(
+              lang ? tt.title.zh : tt.title.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[15]),
+            Text(
+              lang ? tt.content.zh : tt.content.en,
+              style: const TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            blockSetting(uis[16]),
             ListView.separated(
               shrinkWrap: true,
               itemCount: inputPart71.length,
@@ -1433,121 +1648,118 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               margin: const pw.EdgeInsets.all(0),
               build: (pw.Context context) => pw.Stack(
                 children: <pw.Widget>[
-                  // # Name
-                  resumeAnchorPDF(30, 30, 35, resumes[mainResume].name, true, false, PdfColor.fromHex("#000000")),
+                  // # 0. Basic Info
+                  resumeAnchorPDF(uiPDFs[0], resumes[mainResume].name),
+                  resumeAnchorPDF(uiPDFs[1], '${resumes[mainResume].site}  •  ${resumes[mainResume].phone}'),
+                  resumeAnchorPDF(uiPDFs[2], resumes[mainResume].email),
 
-                  // # Info
-                  resumeAnchorPDF(520, 30, 15, '${resumes[mainResume].site} • ${resumes[mainResume].phone}', false, false, PdfColor.fromHex("#000000")),
-                  resumeAnchorPDF(520, 50, 15, resumes[mainResume].email, false, false, PdfColor.fromHex("#000000")),
+                  // # 1. Qualifications Summary
+                  resumeAnchorPDF(uiPDFs[3], tt.basicSummary.en),
+                  resumeAnchorPDF(uiPDFs[4], resumes[mainResume].summary),
 
-                  // # Qualifications Summary
-                  resumeAnchorPDF(30, 90, 25, tt.basicSummary.en, false, true, PdfColor.fromHex("#000000")),
-                  resumeAnchorPDF(30, 120, 18, resumes[mainResume].summary, false, false, PdfColor.fromHex("#000000")),
-
-                  // # Core Competencies
-                  if (resumes[mainResume].coreCompetencies.isNotEmpty) resumeAnchorPDF(30, 250, 25, tt.coreCompetencies.en, true, false, PdfColor.fromHex("#0000FF")),
-                  if (resumes[mainResume].coreCompetencies.isNotEmpty)
+                  // # 2. Core Competencies
+                  if (uiPDFs[5].show) resumeAnchorPDF(uiPDFs[5], tt.coreCompetencies.en),
+                  if (uiPDFs[6].show)
                     resumeListPDF(
-                      30,
-                      285,
+                      uiPDFs[6],
                       resumes[mainResume].coreCompetencies.map((entry) {
-                        return resumeTextPDF(18, "• $entry", false, false, PdfColor.fromHex("#000000"));
+                        return resumeTextPDF(uiPDFs[6], "• $entry");
                       }).toList(),
                     ),
 
-                  // # Education
-                  if (resumes[mainResume].educations.isNotEmpty) resumeAnchorPDF(30, 400, 25, tt.education.en, true, false, PdfColor.fromHex("#0000FF")),
-                  if (resumes[mainResume].educations.isNotEmpty)
+                  // # 3. Education
+                  if (uiPDFs[7].show) resumeAnchorPDF(uiPDFs[7], tt.education.en),
+                  if (uiPDFs[8].show)
                     resumeListPDF(
-                      30,
-                      435,
+                      uiPDFs[8],
                       resumes[mainResume].educations.map((entry) {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(16, '${entry.timeStart} - ${entry.timeEnd}', true, true, PdfColor.fromHex("#000000")),
-                            resumeTextPDF(15, entry.department, true, false, PdfColor.fromHex("#000000")),
-                            resumeTextPDF(16, entry.school, false, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(uiPDFs[8], '${entry.timeStart} - ${entry.timeEnd}'),
+                            resumeTextPDF(uiPDFs[8], entry.department),
+                            resumeTextPDF(uiPDFs[8], entry.school),
                             pw.SizedBox(height: 10),
                           ],
                         );
                       }).toList(),
                     ),
 
-                  // # Certifications
-                  if (resumes[mainResume].certifications.isNotEmpty) resumeAnchorPDF(30, 600, 25, tt.certifications.en, true, false, PdfColor.fromHex("#0000FF")),
-                  if (resumes[mainResume].certifications.isNotEmpty)
+                  // # 4. Certifications
+                  if (uiPDFs[9].show) resumeAnchorPDF(uiPDFs[9], tt.certifications.en),
+                  if (uiPDFs[10].show)
                     resumeListPDF(
-                      30,
-                      635,
+                      uiPDFs[10],
                       resumes[mainResume].certifications.map((entry) {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(18, entry.description, true, false, PdfColor.fromHex("#000000")),
-                            resumeTextPDF(18, entry.organization, false, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(uiPDFs[10], entry.description),
+                            resumeTextPDF(uiPDFs[10], entry.organization),
                             pw.SizedBox(height: 10),
                           ],
                         );
                       }).toList(),
                     ),
 
-                  // # Professional Development
-                  if (resumes[mainResume].professionalDevelopments.isNotEmpty) resumeAnchorPDF(30, 600, 25, tt.professionalDevelopment.en, true, false, PdfColor.fromHex("#0000FF")),
-                  if (resumes[mainResume].professionalDevelopments.isNotEmpty)
+                  // # 5. Professional Development
+                  if (uiPDFs[11].show) resumeAnchorPDF(uiPDFs[11], tt.professionalDevelopment.en),
+                  if (uiPDFs[12].show)
                     resumeListPDF(
-                      30,
-                      635,
+                      uiPDFs[12],
                       resumes[mainResume].professionalDevelopments.map((entry) {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
-                            resumeTextPDF(18, entry.description, false, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(uiPDFs[12], entry.category),
+                            resumeTextPDF(uiPDFs[12], entry.description),
                             pw.SizedBox(height: 10),
                           ],
                         );
                       }).toList(),
                     ),
 
-                  // # Professional Development
-                  if (resumes[mainResume].technicalProficiencies.isNotEmpty) resumeAnchorPDF(30, 700, 25, tt.technicalProficiencies.en, true, false, PdfColor.fromHex("#0000FF")),
-                  if (resumes[mainResume].technicalProficiencies.isNotEmpty)
+                  // # 6. Professional Development
+                  if (uiPDFs[13].show) resumeAnchorPDF(uiPDFs[13], tt.technicalProficiencies.en),
+                  if (uiPDFs[14].show)
                     resumeListPDF(
-                      30,
-                      735,
+                      uiPDFs[14],
                       resumes[mainResume].technicalProficiencies.map((entry) {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(18, entry.category, true, false, PdfColor.fromHex("#000000")),
-                            resumeTextPDF(16, entry.description, false, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(uiPDFs[14], entry.category),
+                            resumeTextPDF(uiPDFs[14], entry.description),
                             pw.SizedBox(height: 10),
                           ],
                         );
                       }).toList(),
                     ),
 
-                  // # Career Experience
-                  if (resumes[mainResume].careerExperiences.isNotEmpty) resumeAnchorPDF(380, 250, 25, tt.careerExperience.en, true, false, PdfColor.fromHex("#0000FF")),
-                  if (resumes[mainResume].careerExperiences.isNotEmpty)
+                  // # 7. Career Experience
+                  if (uiPDFs[15].show) resumeAnchorPDF(uiPDFs[15], tt.careerExperience.en),
+                  if (uiPDFs[16].show)
                     resumeListPDF(
-                      380,
-                      285,
+                      uiPDFs[16],
                       resumes[mainResume].careerExperiences.map((entry) {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(15, entry.companyName, false, false, PdfColor.fromHex("#000000")),
+                            resumeTextPDF(uiPDFs[16], entry.companyName),
+                            pw.SizedBox(height: 2),
+                            resumeTextPDF(uiPDFs[16], entry.jobTitle),
+                            pw.SizedBox(height: 2),
+                            resumeTextPDF(uiPDFs[16], "${entry.timeStart} ~ ${entry.timeEnd}"),
+                            pw.SizedBox(height: 2),
+                            resumeTextPDF(
+                              uiPDFs[16],
+                              entry.summary,
+                            ),
                             pw.SizedBox(height: 5),
-                            resumeTextPDF(16, entry.jobTitle, true, false, PdfColor.fromHex("#000000")),
-                            pw.SizedBox(height: 10),
-                            resumeTextPDF(15, entry.summary, false, false, PdfColor.fromHex("#000000")),
-                            pw.SizedBox(height: 10),
                             pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: entry.descriptions.map((description) {
-                                return resumeTextPDF(15, "• $description", false, false, PdfColor.fromHex("#000000"));
+                                return resumeTextPDF(uiPDFs[16], "• $description");
                               }).toList(),
                             ),
                             pw.SizedBox(height: 20),
@@ -1572,5 +1784,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       const SizedBox(height: 10),
     ];
+  }
+
+  loadFont() async {
+    pdfFont = await rootBundle.load("fonts/NotoSansTC-Regular.ttf");
+  }
+
+  savePDF() async {
+    Uint8List pdfInBytes = await pdf.save();
+
+    final blob = html.Blob([pdfInBytes], 'application/pdf');
+
+    anchor = html.document.createElement('a') as html.AnchorElement
+      ..href = html.Url.createObjectUrlFromBlob(blob)
+      ..style.display = 'none'
+      ..download = resumes[mainResume].alias;
+
+    html.document.body?.children.add(anchor);
+
+    anchor.click();
   }
 }
