@@ -1,9 +1,8 @@
-import 'package:flutter/services.dart';
-
 import 'object.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:universal_html/html.dart' as html;
 
 int mainResume = -1;
@@ -14,36 +13,36 @@ List<PersonInfo> resumes = [];
 List<Block> uis = [
   // # 0. Basic Info
   Block(show: true, l: 30, t: 30, fontSize: 30, fontColor: 1, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 500, t: 32, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
-  Block(show: true, l: 500, t: 52, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 500, t: 35, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 500, t: 55, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 1. Qualifications Summary
   Block(show: true, l: 30, t: 90, fontSize: 22, fontColor: 1, backgroundColor: 2, isBold: true, isItalic: true),
-  Block(show: true, l: 30, t: 120, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 30, t: 130, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 2. Core Competencies
   Block(show: true, l: 30, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 30, t: 285, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 30, t: 285, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 3. Education
   Block(show: true, l: 30, t: 400, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 30, t: 435, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 30, t: 435, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 4. Certifications
   Block(show: false, l: 30, t: 600, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: false, l: 30, t: 635, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: false, l: 30, t: 635, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 5. Professional Development
   Block(show: true, l: 30, t: 600, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 30, t: 635, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 30, t: 635, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 6. Technical Proficiencies
   Block(show: true, l: 30, t: 700, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 30, t: 735, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 30, t: 735, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 
   // # 7. Career Experience
-  Block(show: true, l: 400, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
-  Block(show: true, l: 400, t: 285, fontSize: 14, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
+  Block(show: true, l: 420, t: 250, fontSize: 23, fontColor: 3, backgroundColor: 2, isBold: true, isItalic: false),
+  Block(show: true, l: 420, t: 285, fontSize: 15, fontColor: 1, backgroundColor: 2, isBold: false, isItalic: false),
 ];
 List<Block> uiPDFs = uis.map((ui) => ui.toPDF()).toList();
 
@@ -403,7 +402,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       children: [
         // # 0. Basic Info
         if (uis[0].show) resumeAnchor(uis[0], resumes[mainResume].name),
-        if (uis[1].show) resumeAnchor(uis[1], '${resumes[mainResume].site}  •  ${resumes[mainResume].phone}'),
+        if (uis[1].show) resumeAnchor(uis[1], '${resumes[mainResume].site} • ${resumes[mainResume].phone}'),
         if (uis[2].show) resumeAnchor(uis[2], resumes[mainResume].email),
 
         // # 1. Qualifications Summary
@@ -429,8 +428,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(uis[8], '${entry.timeStart} - ${entry.timeEnd}'),
-                  resumeText(uis[8], entry.department),
+                  resumeText(uis[8].toBold(), '${entry.timeStart} - ${entry.timeEnd}'),
+                  resumeText(uis[8].toBold(), entry.department),
                   resumeText(uis[8], entry.school),
                   const SizedBox(height: 10),
                 ],
@@ -447,7 +446,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(uis[10], entry.description),
+                  resumeText(uis[10].toBold(), entry.description),
                   resumeText(uis[10], entry.organization),
                   const SizedBox(height: 10),
                 ],
@@ -464,7 +463,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(uis[12], entry.category),
+                  resumeText(uis[12].toBold(), entry.category),
                   resumeText(uis[12], entry.description),
                   const SizedBox(height: 10),
                 ],
@@ -481,7 +480,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  resumeText(uis[14], entry.category),
+                  resumeText(uis[14].toBold(), entry.category),
                   resumeText(uis[14], entry.description),
                   const SizedBox(height: 10),
                 ],
@@ -498,11 +497,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  resumeText(uis[16].toBold(), "${entry.timeStart} ~ ${entry.timeEnd}"),
+                  const SizedBox(height: 2),
                   resumeText(uis[16], entry.companyName),
                   const SizedBox(height: 2),
-                  resumeText(uis[16], entry.jobTitle),
-                  const SizedBox(height: 2),
-                  resumeText(uis[16], "${entry.timeStart} ~ ${entry.timeEnd}"),
+                  resumeText(uis[16].toBold(), entry.jobTitle),
                   const SizedBox(height: 2),
                   resumeText(
                     uis[16],
@@ -1649,13 +1648,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               build: (pw.Context context) => pw.Stack(
                 children: <pw.Widget>[
                   // # 0. Basic Info
-                  resumeAnchorPDF(uiPDFs[0], resumes[mainResume].name),
-                  resumeAnchorPDF(uiPDFs[1], '${resumes[mainResume].site}  •  ${resumes[mainResume].phone}'),
-                  resumeAnchorPDF(uiPDFs[2], resumes[mainResume].email),
+                  if (uiPDFs[0].show) resumeAnchorPDF(uiPDFs[0], resumes[mainResume].name),
+                  if (uiPDFs[1].show) resumeAnchorPDF(uiPDFs[1], '${resumes[mainResume].site} • ${resumes[mainResume].phone}'),
+                  if (uiPDFs[2].show) resumeAnchorPDF(uiPDFs[2], resumes[mainResume].email),
 
                   // # 1. Qualifications Summary
-                  resumeAnchorPDF(uiPDFs[3], tt.basicSummary.en),
-                  resumeAnchorPDF(uiPDFs[4], resumes[mainResume].summary),
+                  if (uiPDFs[3].show) resumeAnchorPDF(uiPDFs[3], tt.basicSummary.en),
+                  if (uiPDFs[4].show) resumeAnchorPDF(uiPDFs[4], resumes[mainResume].summary),
 
                   // # 2. Core Competencies
                   if (uiPDFs[5].show) resumeAnchorPDF(uiPDFs[5], tt.coreCompetencies.en),
@@ -1676,8 +1675,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(uiPDFs[8], '${entry.timeStart} - ${entry.timeEnd}'),
-                            resumeTextPDF(uiPDFs[8], entry.department),
+                            resumeTextPDF(uiPDFs[8].toBold(), '${entry.timeStart} - ${entry.timeEnd}'),
+                            resumeTextPDF(uiPDFs[8].toBold(), entry.department),
                             resumeTextPDF(uiPDFs[8], entry.school),
                             pw.SizedBox(height: 10),
                           ],
@@ -1694,7 +1693,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(uiPDFs[10], entry.description),
+                            resumeTextPDF(uiPDFs[10].toBold(), entry.description),
                             resumeTextPDF(uiPDFs[10], entry.organization),
                             pw.SizedBox(height: 10),
                           ],
@@ -1711,7 +1710,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(uiPDFs[12], entry.category),
+                            resumeTextPDF(uiPDFs[12].toBold(), entry.category),
                             resumeTextPDF(uiPDFs[12], entry.description),
                             pw.SizedBox(height: 10),
                           ],
@@ -1728,7 +1727,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            resumeTextPDF(uiPDFs[14], entry.category),
+                            resumeTextPDF(uiPDFs[14].toBold(), entry.category),
                             resumeTextPDF(uiPDFs[14], entry.description),
                             pw.SizedBox(height: 10),
                           ],
@@ -1745,11 +1744,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
+                            resumeTextPDF(uiPDFs[16].toBold(), "${entry.timeStart} ~ ${entry.timeEnd}"),
+                            pw.SizedBox(height: 2),
                             resumeTextPDF(uiPDFs[16], entry.companyName),
                             pw.SizedBox(height: 2),
-                            resumeTextPDF(uiPDFs[16], entry.jobTitle),
-                            pw.SizedBox(height: 2),
-                            resumeTextPDF(uiPDFs[16], "${entry.timeStart} ~ ${entry.timeEnd}"),
+                            resumeTextPDF(uiPDFs[16].toBold(), entry.jobTitle),
                             pw.SizedBox(height: 2),
                             resumeTextPDF(
                               uiPDFs[16],

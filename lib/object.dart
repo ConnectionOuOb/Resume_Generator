@@ -353,6 +353,17 @@ class Block {
         isItalic: isItalic,
       );
 
+  Block toBold() => Block(
+        show: show,
+        l: l,
+        t: t,
+        fontSize: fontSize,
+        fontColor: fontColor,
+        backgroundColor: backgroundColor,
+        isBold: true,
+        isItalic: isItalic,
+      );
+
   Block({
     required this.show,
     required this.l,
@@ -478,16 +489,15 @@ PersonInfo connectionEn = PersonInfo(
   site: r'Hsinchu, Taiwan',
   phone: '+886-935354154',
   email: 'connection.bt12@nycu.edu.tw',
-  summary: r'NYCU Bioinformatics and Systems Biology graduated with skills in'
-      r' big data analysis and modeling. Currently seeking aposition as a'
-      r' Data Scientist. I have gained experience of developing neural ne'
-      r'twork models with Academia Sinica andworked as a Research and Deve'
-      r'lopment Engineer at Bovia, receiving a championship in the Chunghwa'
-      r' Telecom 5G Innovative Application Competition.',
+  summary: r'  NYCU Bioinformatics and Systems Biology graduated with skills in big data analysis and modeling.'
+      r' Currently seeking a position as a Data Scientist. I have gained experience of developing neural network models'
+      r' with Academia Sinica and worked as a Research and Development Engineer at Bovia, receiving a championship in the'
+      r' Chunghwa Telecom 5G Innovative Application Competition.',
   coreCompetencies: [
     "Machine Learning",
     "Big Data Analysis",
-    "System Design",
+    "MIS Engineer",
+    "DevOps Engineer",
     "Full Stack Engineer",
   ],
   educations: [
@@ -518,7 +528,7 @@ PersonInfo connectionEn = PersonInfo(
     ),
     CategoryDescription(
       category: 'Full stack',
-      description: 'Golang, Dart/Flutter, MySQL, POSTGRESQL',
+      description: 'Golang, Dart/Flutter, MySQL, HTML/CSS',
     ),
     CategoryDescription(
       category: 'Algorithm',
@@ -557,17 +567,18 @@ PersonInfo connectionEn = PersonInfo(
       timeEnd: 'January 2024',
       summary: '123\n123\n123\n123',
       descriptions: [
-        '1',
+        r'2022 Chunghwa Telecom 5G Innovation Application Competition Champion',
         '2',
-        '3',
       ],
     ),
     CareerExperience(
       companyName: r'Computational Biology and Bioengineering Laboratory, IBSB, NYCU',
-      jobTitle: 'MIS & IT Engineer',
+      jobTitle: 'MIS & IT Administrator',
       timeStart: 'September 2018',
       timeEnd: 'February 2023',
-      summary: '123\n123\n123\n123',
+      summary: 'Manage server clusters and network architecture, set up Proxmox VE virtualization system,'
+          ' and establish a version control framework for software application development,'
+          ' along with semi-automated deployment.',
       descriptions: [
         '1',
         '2',
