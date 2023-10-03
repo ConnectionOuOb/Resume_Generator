@@ -397,11 +397,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   resumeText(15, entry.companyName, false, false, Colors.black),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 2),
                   resumeText(16, entry.jobTitle, true, false, Colors.black),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 2),
+                  resumeText(16, "${entry.timeStart} ~ ${entry.timeEnd}", false, true, Colors.black),
+                  const SizedBox(height: 2),
                   resumeText(15, entry.summary, false, false, Colors.black),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: entry.descriptions.map((description) {
@@ -491,6 +493,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     List<TextEditingController> inputPart73 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.companyName)).toList();
     List<TextEditingController> inputPart74 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.jobTitle)).toList();
     List<TextEditingController> inputPart75 = resumes[mainResume].careerExperiences.map((element) => TextEditingController(text: element.summary)).toList();
+    List<List<TextEditingController>> inputPart76 = resumes[mainResume].careerExperiences.map((element) => element.descriptions.map((e) => TextEditingController(text: e)).toList()).toList();
     return <Widget>[
       // # 1. Basic Info
       Container(
@@ -1212,7 +1215,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 return const SizedBox(height: 7);
               },
               itemBuilder: (context, index) {
-                List<TextEditingController> hls = resumes[mainResume].careerExperiences[index].descriptions.map((e) => TextEditingController(text: e)).toList();
                 return Column(
                   children: [
                     ListTile(
@@ -1275,13 +1277,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ListTile(
                       title: ListView.separated(
                         shrinkWrap: true,
-                        itemCount: hls.length,
+                        itemCount: inputPart76[index].length,
                         separatorBuilder: (BuildContext context, int index) {
                           return const SizedBox(height: 12);
                         },
                         itemBuilder: (context, idx) {
                           return TextField(
-                            controller: hls[idx],
+                            controller: inputPart76[index][idx],
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               labelText: "${lang ? tt.careerFocus.zh : tt.careerFocus.en} #${idx + 1}",
@@ -1393,7 +1395,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               companyName: inputPart73[ele.key].text,
                               jobTitle: inputPart74[ele.key].text,
                               summary: inputPart75[ele.key].text,
-                              descriptions: [],
+                              descriptions: inputPart76[ele.key].map((m) => m.text).toList(),
                             ),
                           )
                           .toList();

@@ -401,10 +401,7 @@ PersonInfo connectionEn = PersonInfo(
       department: 'Department of Biological Science and Technology',
     ),
   ],
-  certifications: [
-    Certification(description: "description1", organization: "organization1"),
-    Certification(description: "description2", organization: "organization2"),
-  ],
+  certifications: [],
   professionalDevelopments: [
     CategoryDescription(
       category: 'Marine data modeling',
