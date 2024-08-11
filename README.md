@@ -1,5 +1,5 @@
 # Resume Generator
-### A web app that generates highly self-define resumes
+### A web app that generates highly self-defination resumes
 
 ### [Demo](https://connectionouob.github.io/resume-generator/)
 
